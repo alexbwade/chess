@@ -1,5 +1,8 @@
 .board {
-  background-color: red;
-  width: 200px;
-  height: 200px;
+  background-color: transparent;
+  border: 2px solid black;
+  // width: 600px;
+  // height: 600px;
+  display: flex;
+  flex-flow: row wrap;
 }
