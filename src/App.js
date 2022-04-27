@@ -1,5 +1,4 @@
-import Board from './components/Board';
-import Square from './components/Square';
+import ChessBoard from './components/Board';
 
 import './App.css';
 
@@ -8,11 +7,7 @@ function App() {
     <div className='App'>
       <header className='App-header'>Chess</header>
       <main>
-        <Board>
-          {[...new Array(204)].fill('').map((v, i) => (
-            <Square color={i % 2 === 0 ? 'white' : 'black'} />
-          ))}
-        </Board>
+        <ChessBoard />
       </main>
     </div>
   );
