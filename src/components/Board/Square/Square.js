@@ -1,14 +1,19 @@
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
+import { COLORS } from '../../../constants';
+
 import styles from './Square.module.scss';
 
-export default function Square({ color }) {
+const { WHITE, BLACK } = COLORS;
+
+export default function Square({ color, id }) {
   return (
     <div
+      id={id}
       className={classNames(styles.square, {
-        [styles.white]: color === 'white',
-        [styles.black]: color === 'black',
+        [styles.white]: color === WHITE,
+        [styles.black]: color === BLACK,
       })}
     />
   );
