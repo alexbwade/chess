@@ -1,12 +1,54 @@
+$num_square_rows: 8;
+$num_square_columns: 8;
+$square_size: 100px;
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+}
+
 .board {
-  background-color: transparent;
-  border: 2px solid black;
-  // width: 600px;
-  // height: 600px;
   display: grid;
   grid-gap: 0;
-  grid-template-columns: repeat(8, 100px);
-  grid-template-rows: 40px repeat(8, 100px) 40px;
+  grid-template-columns: 40px calc($num_square_columns * $square_size) 40px;
+  grid-template-rows: 40px calc($num_square_rows * $square_size) 40px;
+  grid-template-areas:
+    'top top top'
+    'left center right'
+    'bottom bottom bottom';
+}
+
+.top,
+.left,
+.right,
+.bottom {
+  background-color: #815346;
+}
+
+.top {
+  grid-area: top;
+}
+
+.left {
+  grid-area: left;
+}
+
+.right {
+  grid-area: right;
+}
+
+.bottom {
+  grid-area: bottom;
+}
+
+.grid {
+  background-color: transparent;
+  display: grid;
+  grid-area: center;
+  grid-gap: 0;
+  grid-template-columns: repeat($num_square_columns, $square_size);
+  grid-template-rows: repeat($num_square_rows, $square_size);
   grid-auto-flow: row;
   margin: 0 auto;
 }
