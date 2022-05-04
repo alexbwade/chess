@@ -1,4 +1,4 @@
-import ChessBoard from './components/Board';
+import ChessGame from './components/Game';
 
 import './App.scss';
 
@@ -7,7 +7,7 @@ function App() {
     <div className='App'>
       <header className='App-header'>Chess</header>
       <main>
-        <ChessBoard />
+        <ChessGame />
       </main>
     </div>
   );
