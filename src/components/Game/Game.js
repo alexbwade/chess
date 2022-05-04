@@ -15,6 +15,7 @@ export default class Game extends Component {
     };
 
     this.setBoard = this.setBoard.bind(this);
+    this.clearBoard = this.clearBoard.bind(this);
   }
 
   setBoard() {
@@ -30,9 +31,14 @@ export default class Game extends Component {
 
     return (
       <div className={styles.game}>
-        <button className={styles.startButton} onClick={this.setBoard} type='button'>
-          Start Game
-        </button>
+        <div>
+          <button className={styles.button} onClick={this.setBoard} type='button'>
+            Start Game
+          </button>
+          <button className={styles.button} onClick={this.clearBoard} type='button'>
+            Clear Board
+          </button>
+        </div>
         <Board config={config} />
       </div>
     );
