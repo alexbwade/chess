@@ -5,6 +5,18 @@
   align-items: center;
   justify-content: center;
   text-align: center;
+  position: relative;
+}
+
+.squareId {
+  position: absolute;
+  left: 5px;
+  top: 3px;
+  font-size: 12px;
+}
+
+.occupied {
+  cursor: grab;
 }
 
 .white {
