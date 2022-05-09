@@ -1,0 +1,7 @@
+.piece {
+  transform: scale(0.25);
+}
+
+.black {
+  filter: grayscale(80%) brightness(0.6);
+}

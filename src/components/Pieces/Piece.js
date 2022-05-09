@@ -1,9 +1,10 @@
 import { Component } from 'react';
 
+import styles from './Piece.module.scss';
 export default class Piece extends Component {
   render() {
-    const type = this.type || 'Piece';
+    const { image, type } = this;
 
-    return <div>{type}</div>;
+    return <img alt={type} className={styles.piece} src={image} />;
   }
 }
