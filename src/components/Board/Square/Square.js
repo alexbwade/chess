@@ -7,7 +7,7 @@ import styles from './Square.module.scss';
 
 const { WHITE, BLACK } = COLORS;
 
-export default function Square({ color, id }) {
+export default function Square({ color, id, piece }) {
   return (
     <div
       id={id}
@@ -15,10 +15,22 @@ export default function Square({ color, id }) {
         [styles.white]: color === WHITE,
         [styles.black]: color === BLACK,
       })}
-    />
+    >
+      <span>
+        {/* temporarily outputting square ID for development */}
+        <strong>{id.toUpperCase()}</strong>
+        {piece}
+      </span>
+    </div>
   );
 }
 
 Square.propTypes = {
   color: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  piece: PropTypes.element,
+};
+
+Square.defaultProps = {
+  piece: null,
 };

@@ -1,12 +1,18 @@
 .square {
-  width: 100px;
-  height: 100px;
+  width: 90px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .white {
   background-color: #ffe6de;
+  color: black;
 }
 
 .black {
   background-color: #320e04;
+  color: white;
 }
