@@ -46,9 +46,10 @@ function isLegalMove(move, piece) {
     }
 
     case PAWN: {
-      const isOneSquareForward = move.isVertical && move.isForward && move.isSingleSpace;
-      const isPawnKill = move.isDiagonal && move.isForward && move.isSingleSpace && move.isTake;
-      const isValidMove = isOneSquareForward || isPawnKill;
+      const isSingleSpaceForward = move.isForward && move.isSingleSpace;
+      const isRegularAdvance = isSingleSpaceForward && move.isVertical && !move.isTake;
+      const isEnemyKill = isSingleSpaceForward && move.isDiagonal && move.isTake;
+      const isValidMove = isRegularAdvance || isEnemyKill;
 
       if (!isValidMove) {
         throw new IllegalMoveError(

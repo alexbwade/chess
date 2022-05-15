@@ -1,4 +1,6 @@
-import { COLUMNS, ROWS } from "../../../constants";
+import { COLUMNS, ROWS, DIRECTIONS } from "../../../constants";
+
+const { L_SHAPE, OTHER } = DIRECTIONS;
 
 const getIncrementer = (diff) => {
   if (diff > 0) return 1; // right, down
@@ -10,6 +12,10 @@ export function getSpacesInPathProperty(move) {
   const { currentRowIndex, currentColIndex, targetRowIndex, targetColIndex, rowDiff, colDiff } = move;
 
   const results = [];
+
+  if ([L_SHAPE, OTHER].includes(move.direction)) {
+    return results;
+  }
 
   const rowIncrementer = getIncrementer(rowDiff);
   const colIncrementer = getIncrementer(colDiff);
