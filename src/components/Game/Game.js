@@ -2,6 +2,8 @@ import { useState } from "react";
 import classNames from "classnames";
 
 import { BOARD_EMPTY, BOARD_NEW_GAME } from "./constants";
+import isValidMove from "./validation";
+import getMoveDetails from "./calculator";
 
 import Board from "../Board";
 
@@ -12,10 +14,6 @@ export default function Game() {
   const [moving, setMoving] = useState(false);
   const [fromSquareId, setFromSquareId] = useState(null);
 
-  const isValidMove = (start, end) => {
-    return !config[end];
-  };
-
   const moveStart = (squareId) => {
     setMoving(true);
     setFromSquareId(squareId);
@@ -24,8 +22,13 @@ export default function Game() {
   const moveEnd = (targetSquareId) => {
     const start = fromSquareId;
     const end = targetSquareId;
+    const piece = config[start];
 
-    if (isValidMove(start, end)) {
+    const move = getMoveDetails({ config, piece, start, end });
+
+    console.log({ move });
+
+    if (isValidMove(move, piece)) {
       movePiece(start, end);
     }
 

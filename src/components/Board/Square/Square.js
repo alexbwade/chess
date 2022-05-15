@@ -13,9 +13,15 @@ const { WHITE, BLACK } = COLORS;
 const ignore = (e) => e.preventDefault();
 
 export default function Square({ color, id, piece, moveStart, moveEnd }) {
-  const handleStartMoving = () => moveStart(id);
+  const handleStartMoving = () => {
+    console.log("grab: ", id);
+    moveStart(id);
+  };
 
-  const handleStopMoving = () => moveEnd(id);
+  const handleStopMoving = () => {
+    console.log("drop: ", id);
+    moveEnd(id);
+  };
 
   return (
     <div
