@@ -2,6 +2,7 @@ import { useState } from "react";
 import classNames from "classnames";
 
 import { BOARD_EMPTY, BOARD_NEW_GAME } from "./constants";
+import { validate } from "../Pieces";
 
 import Board from "../Board";
 
@@ -13,7 +14,9 @@ export default function Game() {
   const [fromSquareId, setFromSquareId] = useState(null);
 
   const isValidMove = (start, end) => {
-    return !config[end];
+    const piece = config[start];
+
+    return validate({ config, piece, start, end });
   };
 
   const moveStart = (squareId) => {
