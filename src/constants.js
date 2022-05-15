@@ -38,3 +38,10 @@ export const SQUARES = (function () {
 })();
 
 export const NUM_SQUARES = SQUARES.length;
+
+export const DIRECTIONS = {
+  DIAGONAL: "diagonal",
+  HORIZONTAL: "horizontal",
+  VERTICAL: "vertical",
+  OTHER: "other",
+};
