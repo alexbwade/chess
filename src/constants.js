@@ -43,5 +43,6 @@ export const DIRECTIONS = {
   DIAGONAL: "diagonal",
   HORIZONTAL: "horizontal",
   VERTICAL: "vertical",
+  L_SHAPE: "l_shape",
   OTHER: "other",
 };

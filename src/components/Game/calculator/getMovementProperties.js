@@ -1,6 +1,23 @@
-import { COLORS } from "../../../constants";
+import { COLORS, DIRECTIONS } from "../../../constants";
 
 const { BLACK, WHITE } = COLORS;
+const { HORIZONTAL, VERTICAL, DIAGONAL, L_SHAPE } = DIRECTIONS;
+
+export function isDiagonal({ direction }) {
+  return direction === DIAGONAL;
+}
+
+export function isHorizontal({ direction }) {
+  return direction === HORIZONTAL;
+}
+
+export function isVertical({ direction }) {
+  return direction === VERTICAL;
+}
+
+export function isL({ direction }) {
+  return direction === L_SHAPE;
+}
 
 export function isSameSpace({ start, end }) {
   return start === end;
@@ -22,13 +39,6 @@ export function isForward({ color, rowDiff }) {
   return false;
 }
 
-export function isL({ colDiff, rowDiff }) {
-  const rowAbsDiff = Math.abs(rowDiff);
-  const colAbsDiff = Math.abs(colDiff);
-
-  return (rowAbsDiff === 2 && colAbsDiff === 1) || (rowAbsDiff === 1 && colAbsDiff === 2);
-}
-
 export function isTake({ config, end }) {
   return !!config[end];
 }
@@ -43,13 +53,13 @@ export function hasClearPath({ config, spacesInPath }) {
 
 const CALCULATIONS = {
   isDiagonal,
-  isVertical,
   isHorizontal,
+  isVertical,
+  isL,
   isSingleSpace,
   isSameSpace,
   isFriendlyOccupied,
   isForward,
-  isL,
   isTake,
   hasClearPath,
 };
