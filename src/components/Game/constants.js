@@ -1,8 +1,7 @@
-import { COLORS, COLUMNS, SQUARES } from '../../constants';
-
-import { Pawn, Knight, Bishop, Queen, King, Rook } from '../Pieces';
+import { COLORS, COLUMNS, PIECE_TYPES, SQUARES } from "../../constants";
 
 const { WHITE, BLACK } = COLORS;
+const { BISHOP, KING, KNIGHT, PAWN, QUEEN, ROOK } = PIECE_TYPES;
 
 export const BOARD_EMPTY = SQUARES.reduce((config, square) => {
   config[square.id] = null;
@@ -12,10 +11,11 @@ export const BOARD_EMPTY = SQUARES.reduce((config, square) => {
 export const BOARD_NEW_GAME = (function () {
   const board = { ...BOARD_EMPTY };
 
-  const MAJOR_ROW = [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook];
-  const MINOR_ROW = new Array(8).fill(Pawn);
+  const MAJOR_ROW = [ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK];
+  const MINOR_ROW = new Array(8).fill(PAWN);
 
-  const createPieces = (pieces, color) => pieces.map((Piece) => <Piece color={color} />);
+  const createPieces = (pieceTypes, color) =>
+    pieceTypes.map((type) => ({ color, type }));
 
   const occupiedRows = {
     8: createPieces(MAJOR_ROW, BLACK),

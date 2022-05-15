@@ -1,10 +1,9 @@
-import { Component } from 'react';
+import PIECE_IMAGES from "./images";
 
-import styles from './Piece.module.scss';
-export default class Piece extends Component {
-  render() {
-    const { image, type } = this;
+import styles from "./Piece.module.scss";
 
-    return <img alt={type} className={styles.piece} src={image} />;
-  }
+export default function Piece({ color, type }) {
+  const image = PIECE_IMAGES[type][color];
+
+  return <img alt={type} className={styles.piece} src={image} />;
 }

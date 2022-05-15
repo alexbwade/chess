@@ -6,7 +6,7 @@ import Square from './Square';
 
 import styles from './Board.module.scss';
 
-export default function Board({ config }) {
+export default function Board({ config, moveStart, moveEnd }) {
   return (
     <div className={styles.wrapper}>
       <div className={styles.board}>
@@ -16,7 +16,7 @@ export default function Board({ config }) {
           {SQUARES.map(({ id, color }) => {
             const piece = config?.[id];
 
-            return <Square color={color} id={id} key={id} piece={piece} />;
+            return <Square color={color} id={id} key={id} piece={piece} moveStart={moveStart} moveEnd={moveEnd} />;
           })}
         </div>
         <div className={styles.right} />

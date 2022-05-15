@@ -1,8 +1,7 @@
 import { render, screen } from '@testing-library/react';
 
+import { NUM_SQUARES } from '../../../constants';
 import Board from '../Board';
-
-const NUM_SQUARES = 64;
 
 test(`renders ${NUM_SQUARES} squares`, () => {
   render(<Board />);
