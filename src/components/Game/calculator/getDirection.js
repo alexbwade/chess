@@ -2,18 +2,16 @@ import { DIRECTIONS } from "../../../constants";
 
 const { DIAGONAL, HORIZONTAL, VERTICAL, L_SHAPE, OTHER } = DIRECTIONS;
 
-export function isVertical({ start, end }) {
+export function isHorizontal({ start, end }) {
   return start[0] === end[0];
 }
 
-export function isHorizontal({ start, end }) {
+export function isVertical({ start, end }) {
   return start[1] === end[1];
 }
 
 export function isDiagonal({ colDiff, rowDiff }) {
-  const absColDiff = Math.abs(colDiff);
-  const absRowDiff = Math.abs(rowDiff);
-  return absColDiff === absRowDiff;
+  return Math.abs(colDiff) === Math.abs(rowDiff);
 }
 
 export function isL({ colDiff, rowDiff }) {
@@ -23,22 +21,29 @@ export function isL({ colDiff, rowDiff }) {
   return (rowAbsDiff === 2 && colAbsDiff === 1) || (rowAbsDiff === 1 && colAbsDiff === 2);
 }
 
-export default function getDirection(info) {
+export function getDirectionProperty(move) {
   switch (true) {
-    case isVertical(info): {
+    case isVertical(move): {
       return VERTICAL;
     }
-    case isHorizontal(info): {
+    case isHorizontal(move): {
       return HORIZONTAL;
     }
-    case isDiagonal(info): {
+    case isDiagonal(move): {
       return DIAGONAL;
     }
-    case isL(info): {
+    case isL(move): {
       return L_SHAPE;
     }
     default: {
       return OTHER;
     }
   }
+}
+
+export default function getDirection(move) {
+  return {
+    ...move,
+    direction: getDirectionProperty(move),
+  };
 }

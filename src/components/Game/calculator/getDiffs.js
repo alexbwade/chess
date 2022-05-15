@@ -1,6 +1,8 @@
 import { COLUMNS, ROWS } from "../../../constants";
 
-export default function getDiffs(start, end) {
+export default function getDiffs(move) {
+  const { start, end } = move;
+
   const [currentRow, currentCol] = start.split("");
   const [targetRow, targetCol] = end.split("");
   const currentRowIndex = ROWS.indexOf(+currentRow);
@@ -9,6 +11,7 @@ export default function getDiffs(start, end) {
   const targetColIndex = COLUMNS.indexOf(targetCol);
 
   return {
+    ...move,
     currentRowIndex,
     currentColIndex,
     targetRowIndex,

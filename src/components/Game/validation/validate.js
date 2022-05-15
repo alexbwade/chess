@@ -5,11 +5,15 @@ const { BISHOP, KING, KNIGHT, PAWN, QUEEN, ROOK } = PIECE_TYPES;
 
 function isLegalMove(move, piece) {
   if (move.isSameSpace) {
-    throw new IllegalMoveError("Is the same space.");
+    throw new IllegalMoveError("This is the same space.");
   }
 
   if (move.isFriendlyOccupied) {
-    throw new IllegalMoveError("Is already occupied by a friendly piece.");
+    throw new IllegalMoveError("This space is already occupied by a friendly piece.");
+  }
+
+  if ([BISHOP, QUEEN, ROOK].includes(piece.type) && !move.hasClearPath) {
+    throw new IllegalMoveError("There is another piece in the way.");
   }
 
   switch (piece.type) {
@@ -17,16 +21,19 @@ function isLegalMove(move, piece) {
       if (!move.isDiagonal) {
         throw new IllegalMoveError("This piece must move diagonally.");
       }
-      // && hasClearPath
+
       break;
     }
 
     case KING: {
-      if (!move.isSingleSpace) {
-        throw new IllegalMoveError("This piece can only move one space (in any direction) at a time.");
+      const isValidMove = move.isSingleSpace || move.isCastle;
+      if (!isValidMove) {
+        throw new IllegalMoveError(
+          "This piece can only move one space (in any direction) at a time - unless castling."
+        );
       }
+
       break;
-      // todo: isCastle will be special (requires auto-moving a rook - movement should be handled separately from validation)
     }
 
     case KNIGHT: {
@@ -41,7 +48,9 @@ function isLegalMove(move, piece) {
     case PAWN: {
       const isOneSquareForward = move.isVertical && move.isForward && move.isSingleSpace;
       const isPawnKill = move.isDiagonal && move.isForward && move.isSingleSpace && move.isTake;
-      if (!isOneSquareForward && !isPawnKill) {
+      const isValidMove = isOneSquareForward || isPawnKill;
+
+      if (!isValidMove) {
         throw new IllegalMoveError(
           "This piece can only move a single space forward, or take enemies a single space diagonally."
         );
@@ -56,8 +65,6 @@ function isLegalMove(move, piece) {
         throw new IllegalMoveError("This piece can only move in a straight line in any direction.");
       }
 
-      // && hasClearPath
-
       break;
     }
 
@@ -68,7 +75,6 @@ function isLegalMove(move, piece) {
         throw new IllegalMoveError("This piece must move horizontally or vertically.");
       }
 
-      // && hasClearPath
       break;
     }
 

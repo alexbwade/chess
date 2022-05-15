@@ -26,6 +26,8 @@ export default function Game() {
 
     const move = getMoveDetails({ config, piece, start, end });
 
+    console.log({ move });
+
     if (isValidMove(move, piece)) {
       movePiece(start, end);
     }

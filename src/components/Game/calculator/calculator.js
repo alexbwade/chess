@@ -4,30 +4,12 @@ import getMovementProperties from "./getMovementProperties";
 import getDirection from "./getDirection";
 
 export default function calculate(initialMoveData) {
-  const {
-    config,
-    piece: { color, type },
-    start,
-    end,
-  } = initialMoveData;
+  let move;
 
-  // const direction = getDirection(start, end);
-  const diffs = getDiffs(start, end);
-  const direction = getDirection({ start, end, ...diffs });
-  const spacesInPath = getSpacesInPath();
-  const info = {
-    config,
-    color,
-    type,
-    start,
-    end,
-    spacesInPath,
-    ...diffs,
-  };
-
-  const move = getMovementProperties(info);
-
-  console.log({ move });
+  move = getDiffs(initialMoveData);
+  move = getDirection(move);
+  move = getSpacesInPath(move);
+  move = getMovementProperties(move);
 
   return move;
 }

@@ -31,11 +31,11 @@ export function isSingleSpace({ colDiff, rowDiff }) {
   return Math.abs(rowDiff) <= 1 && Math.abs(colDiff) <= 1;
 }
 
-export function isForward({ color, rowDiff }) {
-  if (color === BLACK) return rowDiff > 0;
-  if (color === WHITE) return rowDiff < 0;
+export function isForward({ piece, rowDiff }) {
+  if (piece.color === BLACK) return rowDiff > 0;
+  if (piece.color === WHITE) return rowDiff < 0;
 
-  console.log("Invalid color.");
+  console.log("Invalid piece color.");
   return false;
 }
 
@@ -51,6 +51,11 @@ export function hasClearPath({ config, spacesInPath }) {
   });
 }
 
+export function isCastle() {
+  // todo (for king)
+  return false;
+}
+
 const CALCULATIONS = {
   isDiagonal,
   isHorizontal,
@@ -64,10 +69,17 @@ const CALCULATIONS = {
   hasClearPath,
 };
 
-export default function getMovementProperties(info) {
+export function getCalculations(move) {
   return Object.entries(CALCULATIONS).reduce((acc, [fnName, fn]) => {
-    acc[fnName] = fn(info);
+    acc[fnName] = fn(move);
 
     return acc;
   }, {});
+}
+
+export default function getMovementProperties(move) {
+  return {
+    ...move,
+    ...getCalculations(move),
+  };
 }
