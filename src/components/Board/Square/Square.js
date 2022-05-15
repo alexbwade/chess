@@ -1,16 +1,22 @@
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import PropTypes from "prop-types";
+import classNames from "classnames";
 
-import { COLORS } from '../../../constants';
+import { COLORS } from "../../../constants";
 
-import styles from './Square.module.scss';
+import Piece from "../../Pieces";
+
+import styles from "./Square.module.scss";
 
 const { WHITE, BLACK } = COLORS;
 
 // needed on dragOver and dragEnter events to allow drop to work (because legacy web silliness)
 const ignore = (e) => e.preventDefault();
 
-export default function Square({ color, id, piece }) {
+export default function Square({ color, id, piece, moveStart, moveEnd }) {
+  const handleStartMoving = () => moveStart(id);
+
+  const handleStopMoving = () => moveEnd(id);
+
   return (
     <div
       id={id}
@@ -19,14 +25,14 @@ export default function Square({ color, id, piece }) {
         [styles.black]: color === BLACK,
         [styles.occupied]: !!piece,
       })}
-      onDragStart={(e) => console.log(`drag start: ${id}`, { e })}
-      onDrop={(e) => console.log(`drop: ${id}`, { e })}
+      onDragStart={handleStartMoving}
+      onDrop={handleStopMoving}
       onDragOver={ignore}
       onDragEnter={ignore}
     >
       {/* temporarily outputting square ID for development */}
       <strong className={styles.squareId}>{id.toUpperCase()}</strong>
-      {piece}
+      {piece ? <Piece {...piece} /> : null}
     </div>
   );
 }
@@ -34,7 +40,7 @@ export default function Square({ color, id, piece }) {
 Square.propTypes = {
   color: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  piece: PropTypes.element,
+  piece: PropTypes.object,
 };
 
 Square.defaultProps = {
