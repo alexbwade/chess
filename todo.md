@@ -2,7 +2,7 @@
 
 [x] - Display logic
 [x] - Movement logic essentials
-[] - Port to Next.js
+[x] - Port to Next.js
 [] - Add Jest/RTL
 [] - "Turns"
 [] - FE data structure
