@@ -6,7 +6,7 @@ import Board from "../Board";
 test(`renders ${NUM_SQUARES} squares`, () => {
   render(<Board />);
 
-  const grid = screen.getByTestId("tgrid");
+  const grid = screen.getByTestId("grid");
   const squareCount = grid.childNodes.length;
 
   expect(squareCount).toBe(NUM_SQUARES);
