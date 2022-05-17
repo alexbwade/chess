@@ -11,8 +11,8 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: "12"
-      - run: pnpm install
-      - run: pnpm test:ci
+      - run: yarn install
+      - run: yarn test:ci
 
       - name: Tests ✅
         if: ${{ success() }}
