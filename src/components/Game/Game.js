@@ -2,7 +2,7 @@ import { useState } from "react";
 import classNames from "classnames";
 
 import { BOARD_EMPTY, BOARD_NEW_GAME } from "./constants";
-import isValidMove from "./validation";
+import isValidMove from "./validator";
 import getMoveDetails from "./calculator";
 
 import Board from "../Board";
