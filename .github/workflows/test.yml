@@ -1,6 +1,6 @@
-name: Tests CI
+name: Build
 
-on: [push, pull_request]
+on: [pull_request]
 
 jobs:
   build:
@@ -19,6 +19,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "pnpm"
       - name: Install dependencies
-        run: pnpm install
-      - name: Run tests
+        run: pnpm install --frozen-lockfile
+      - name: Test
         run: pnpm test
+      - name: Build
