@@ -14,6 +14,7 @@ export function getSpacesInPathProperty(move) {
   const results = [];
 
   if ([L_SHAPE, OTHER].includes(move.direction)) {
+    // must be a straight line to calculate
     return results;
   }
 

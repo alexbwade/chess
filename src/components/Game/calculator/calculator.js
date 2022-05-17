@@ -1,15 +1,15 @@
-import getDiffs from "./getDiffs";
-import getSpacesInPath from "./getSpacesInPath";
-import getMovementProperties from "./getMovementProperties";
+import getCoreProperties from "./getCoreProperties";
 import getDirection from "./getDirection";
+import getMiscProperties from "./getMiscProperties";
+import getSpacesInPath from "./getSpacesInPath";
 
 export default function calculate(initialMoveData) {
   let move;
 
-  move = getDiffs(initialMoveData);
+  move = getCoreProperties(initialMoveData);
   move = getDirection(move);
   move = getSpacesInPath(move);
-  move = getMovementProperties(move);
+  move = getMiscProperties(move);
 
   return move;
 }

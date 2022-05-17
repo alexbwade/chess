@@ -42,8 +42,15 @@ export function getDirectionProperty(move) {
 }
 
 export default function getDirection(move) {
+  const direction = getDirectionProperty(move);
+
   return {
     ...move,
-    direction: getDirectionProperty(move),
+    direction,
+    // quick access properties
+    isVertical: direction === VERTICAL,
+    isHorizontal: direction === HORIZONTAL,
+    isDiagonal: direction === DIAGONAL,
+    isL: direction === L_SHAPE,
   };
 }

@@ -1,6 +1,6 @@
 import { COLUMNS, ROWS } from "../../../constants";
 
-export default function getDiffs(move) {
+export default function getCoreProperties(move) {
   const { start, end } = move;
 
   const [currentRow, currentCol] = start.split("");

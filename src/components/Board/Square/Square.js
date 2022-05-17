@@ -3,7 +3,7 @@ import classNames from "classnames";
 
 import { COLORS } from "../../../constants";
 
-import Piece from "../../Pieces";
+import Piece from "../../Piece";
 
 import styles from "./Square.module.scss";
 

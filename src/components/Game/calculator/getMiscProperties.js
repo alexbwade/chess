@@ -1,23 +1,6 @@
-import { COLORS, DIRECTIONS } from "../../../constants";
+import { COLORS } from "../../../constants";
 
 const { BLACK, WHITE } = COLORS;
-const { HORIZONTAL, VERTICAL, DIAGONAL, L_SHAPE } = DIRECTIONS;
-
-export function isDiagonal({ direction }) {
-  return direction === DIAGONAL;
-}
-
-export function isHorizontal({ direction }) {
-  return direction === HORIZONTAL;
-}
-
-export function isVertical({ direction }) {
-  return direction === VERTICAL;
-}
-
-export function isL({ direction }) {
-  return direction === L_SHAPE;
-}
 
 export function isSameSpace({ start, end }) {
   return start === end;
@@ -57,10 +40,6 @@ export function isCastle() {
 }
 
 const CALCULATIONS = {
-  isDiagonal,
-  isHorizontal,
-  isVertical,
-  isL,
   isSingleSpace,
   isSameSpace,
   isFriendlyOccupied,
@@ -69,7 +48,7 @@ const CALCULATIONS = {
   hasClearPath,
 };
 
-export function getCalculations(move) {
+export function calcMiscProperties(move) {
   return Object.entries(CALCULATIONS).reduce((acc, [fnName, fn]) => {
     acc[fnName] = fn(move);
 
@@ -77,9 +56,9 @@ export function getCalculations(move) {
   }, {});
 }
 
-export default function getMovementProperties(move) {
+export default function getMiscProperties(move) {
   return {
     ...move,
-    ...getCalculations(move),
+    ...calcMiscProperties(move),
   };
 }
