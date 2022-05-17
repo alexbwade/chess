@@ -1,6 +1,6 @@
 name: Build
 
-on: [pull_request]
+on: [push, pull_request]
 
 jobs:
   build:
@@ -22,5 +22,3 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Test
         run: pnpm test
-      - name: Build
-        run: pnpm build
