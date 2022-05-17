@@ -8,7 +8,7 @@
 [] - GitHub Actions -> require tests in CI
 [] - GitHub Actions -> require coverage
 [] - "Turns"
-[] - FE data structure
+[] - FE data structure (users vs 'player 1/2', games, etc.)
 [] - Context vs. Redux??
 [] - Auth (AWS + Lambda API...NodeTS?/Go?/Rust/C#?)
 [] - SWR
@@ -18,3 +18,4 @@
 ## Ideas
 
 [] - Tailwind
+[] - Sass "Design system" - Webpack resolve Sass absolute path "v1"
