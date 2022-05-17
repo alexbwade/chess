@@ -3,6 +3,14 @@ name: Tests CI
 on: [push, pull_request]
 
 jobs:
+  cache-and-install:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: pnpm/action-setup@v2.1.0
+        with:
+          version: 7.1.0
+
   test:
     runs-on: ubuntu-latest
     steps:
@@ -10,9 +18,9 @@ jobs:
       - name: Test using Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: "12"
-      - run: yarn install
-      - run: yarn test:ci
+          node-version: "16"
+      - run: pnpm install
+      - run: pnpm test:ci
 
       - name: Tests ✅
         if: ${{ success() }}
