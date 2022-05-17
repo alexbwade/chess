@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "~constants": ["./constants/index.js"],
+      "~hooks/*": ["./hooks/*"],
+      "~utils/*": ["./utils/*"],
+      "~styles/*": ["./sass/*"],
+      "~widgets/*": ["./components/widgets/*"],
+      "~elements/*": ["./components/elements/*"],
+      "~partials/*": ["./components/partials/*"],
+      "~templates/*": ["./components/templates/*"]
+    }
+  }
+}
