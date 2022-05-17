@@ -1,9 +1,7 @@
-// const { getAliases } = require("./config/aliases");
-
 module.exports = {
   cacheDirectory: ".jest-cache",
   clearMocks: true,
-  collectCoverageFrom: ["<rootDir>/src/**/*.js"],
+  collectCoverageFrom: ["<rootDir>/**/*.js"],
   coverageDirectory: "<rootDir>/coverage/",
   coveragePathIgnorePatterns: [],
   coverageReporters: ["json-summary", "html"],
@@ -14,6 +12,7 @@ module.exports = {
     "\\.scss$": "<rootDir>/config/jest/emptyStringMock.js",
     "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)$": "<rootDir>/config/jest/emptyObjectMock.js",
     // module aliases
+    // todo: normalize this against jsconfig.json
     "^~constants": "<rootDir>/constants/index.js",
     "^~hooks(.*)$": "<rootDir>/hooks$1",
     "^~utils(.*)$": "<rootDir>/utils$1",
