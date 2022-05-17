@@ -3,7 +3,7 @@ name: Build and Test
 on: [push, pull_request]
 
 jobs:
-  build-and-test:
+  install:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -20,7 +20,15 @@ jobs:
           cache: "pnpm"
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+  test:
+    needs: install
+    steps:
       - name: Test
         run: pnpm test
+
+  build:
+    needs: install
+    steps:
       - name: Build
         run: pnpm build
