@@ -3,8 +3,8 @@
     "baseUrl": ".",
     "paths": {
       "~constants": ["./constants/index.js"],
+      "~utils": ["./utils/index.js"],
       "~hooks/*": ["./hooks/*"],
-      "~utils/*": ["./utils/*"],
       "~styles/*": ["./sass/*"],
       "~widgets/*": ["./components/widgets/*"],
       "~elements/*": ["./components/elements/*"],
