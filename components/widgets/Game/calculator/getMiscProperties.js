@@ -11,7 +11,10 @@ export function isFriendlyOccupied({ config, start, end }) {
 }
 
 export function isSingleSpace({ colDiff, rowDiff }) {
-  return Math.abs(rowDiff) <= 1 && Math.abs(colDiff) <= 1;
+  const rowChange = Math.abs(rowDiff);
+  const colChange = Math.abs(colDiff);
+
+  return rowChange <= 1 && colChange <= 1 && rowChange + colChange >= 1;
 }
 
 export function isForward({ piece, rowDiff }) {
@@ -22,8 +25,8 @@ export function isForward({ piece, rowDiff }) {
   return false;
 }
 
-export function isTake({ config, end }) {
-  return !!config[end];
+export function isTake({ config, start, end }) {
+  return !!config[end] && config[start].color !== config[end]?.color;
 }
 
 export function hasClearPath({ config, spacesInPath }) {

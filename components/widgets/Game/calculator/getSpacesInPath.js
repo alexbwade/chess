@@ -1,4 +1,4 @@
-import { COLUMNS, ROWS, DIRECTIONS } from "~constants";
+import { COLUMNS, ROWS, DIRECTIONS, NUM_SQUARES } from "~constants";
 
 const { L_SHAPE, OTHER } = DIRECTIONS;
 
@@ -9,11 +9,11 @@ const getIncrementer = (diff) => {
 };
 
 export function getSpacesInPathProperty(move) {
-  const { currentRowIndex, currentColIndex, targetRowIndex, targetColIndex, rowDiff, colDiff } = move;
+  const { currentRowIndex, currentColIndex, direction, targetRowIndex, targetColIndex, rowDiff, colDiff } = move;
 
   const results = [];
 
-  if ([L_SHAPE, OTHER].includes(move.direction)) {
+  if ([L_SHAPE, OTHER].includes(direction)) {
     // must be a straight line to calculate
     return results;
   }
@@ -23,6 +23,7 @@ export function getSpacesInPathProperty(move) {
 
   let thisRowIndex = currentRowIndex + rowIncrementer;
   let thisColIndex = currentColIndex + colIncrementer;
+  let iterations = 0;
 
   while (!(thisRowIndex === targetRowIndex && thisColIndex === targetColIndex)) {
     const rowId = ROWS[thisRowIndex];
@@ -33,6 +34,11 @@ export function getSpacesInPathProperty(move) {
 
     thisRowIndex += rowIncrementer;
     thisColIndex += colIncrementer;
+    iterations++;
+
+    if (iterations > NUM_SQUARES) {
+      throw new Error("Infinite loop in 'while' statement.");
+    }
   }
 
   return results;
