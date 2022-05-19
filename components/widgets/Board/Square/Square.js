@@ -23,6 +23,7 @@ export default function Square({ color, id, piece, moveStart, moveEnd }) {
         [styles.black]: color === BLACK,
         [styles.occupied]: !!piece,
       })}
+      data-testid={`square-${id}`}
       onDragStart={handleStartMoving}
       onDrop={handleStopMoving}
       // needed on dragOver and dragEnter events to allow drop to work (because legacy web silliness)
