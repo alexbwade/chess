@@ -1,16 +1,9 @@
 module.exports = {
   cacheDirectory: ".jest-cache",
   clearMocks: true,
-  collectCoverageFrom: ["<rootDir>/**/*.js"],
+  collectCoverageFrom: ["<rootDir>/components/**/*.js", "<rootDir>/utils/**/*.js"],
   coverageDirectory: "<rootDir>/coverage/",
-  coveragePathIgnorePatterns: [
-    "<rootDir>/*.js",
-    "<rootDir>/.next/",
-    "<rootDir>/config/",
-    "<rootDir>/coverage/",
-    "<rootDir>/pages/",
-    "<rootDir>/constants/",
-  ],
+  coveragePathIgnorePatterns: [],
   coverageThreshold: {
     global: {
       branches: 80,
