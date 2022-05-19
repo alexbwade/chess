@@ -47,6 +47,8 @@ Square.propTypes = {
   color: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   piece: PropTypes.object,
+  moveStart: PropTypes.func.isRequired,
+  moveEnd: PropTypes.func.isRequired,
 };
 
 Square.defaultProps = {

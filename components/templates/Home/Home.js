@@ -13,7 +13,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <header className={styles.appHeader}>Chess</header>
+      <header className={styles.appHeader}>
+        <h1>Chess</h1>
+      </header>
       <main>
         <ChessGame />
       </main>
