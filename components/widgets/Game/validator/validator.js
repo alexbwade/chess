@@ -1,9 +1,19 @@
 import { PIECE_TYPES } from "~constants";
-import IllegalMoveError, { ERROR_SAME_SPACE, ERROR_OCCUPIED } from "./error";
+import IllegalMoveError, {
+  ERROR_SAME_SPACE,
+  ERROR_OCCUPIED,
+  ERROR_BLOCKED,
+  ERROR_BISHOP,
+  ERROR_KING,
+  ERROR_KNIGHT,
+  ERROR_PAWN,
+  ERROR_QUEEN,
+  ERROR_ROOK,
+} from "./error";
 
 const { BISHOP, KING, KNIGHT, PAWN, QUEEN, ROOK } = PIECE_TYPES;
 
-function isLegalMove(move, piece) {
+export function validateMove(move, piece) {
   if (move.isSameSpace) {
     throw new IllegalMoveError(ERROR_SAME_SPACE);
   }
@@ -13,13 +23,13 @@ function isLegalMove(move, piece) {
   }
 
   if ([BISHOP, QUEEN, ROOK].includes(piece.type) && !move.hasClearPath) {
-    throw new IllegalMoveError("There is another piece in the way.");
+    throw new IllegalMoveError(ERROR_BLOCKED);
   }
 
   switch (piece.type) {
     case BISHOP: {
       if (!move.isDiagonal) {
-        throw new IllegalMoveError("This piece must move diagonally.");
+        throw new IllegalMoveError(ERROR_BISHOP);
       }
 
       break;
@@ -28,9 +38,7 @@ function isLegalMove(move, piece) {
     case KING: {
       const isValidMove = move.isSingleSpace || move.isCastle;
       if (!isValidMove) {
-        throw new IllegalMoveError(
-          "This piece can only move one space (in any direction) at a time - unless castling."
-        );
+        throw new IllegalMoveError(ERROR_KING);
       }
 
       break;
@@ -38,9 +46,7 @@ function isLegalMove(move, piece) {
 
     case KNIGHT: {
       if (!move.isL) {
-        throw new IllegalMoveError(
-          "This piece can only move in the shape of an 'L' (2 spaces in one direction, 1 space in the other)."
-        );
+        throw new IllegalMoveError(ERROR_KNIGHT);
       }
       break;
     }
@@ -52,9 +58,7 @@ function isLegalMove(move, piece) {
       const isValidMove = isRegularAdvance || isEnemyKill;
 
       if (!isValidMove) {
-        throw new IllegalMoveError(
-          "This piece can only move a single space forward, or take enemies a single space diagonally."
-        );
+        throw new IllegalMoveError(ERROR_PAWN);
       }
       break;
     }
@@ -63,7 +67,7 @@ function isLegalMove(move, piece) {
       const isValidDirection = move.isDiagonal || move.isHorizontal || move.isVertical;
 
       if (!isValidDirection) {
-        throw new IllegalMoveError("This piece can only move in a straight line in any direction.");
+        throw new IllegalMoveError(ERROR_QUEEN);
       }
 
       break;
@@ -73,7 +77,7 @@ function isLegalMove(move, piece) {
       const isValidDirection = move.isHorizontal || move.isVertical;
 
       if (!isValidDirection) {
-        throw new IllegalMoveError("This piece must move horizontally or vertically.");
+        throw new IllegalMoveError(ERROR_ROOK);
       }
 
       break;
@@ -89,12 +93,16 @@ function isLegalMove(move, piece) {
 
 export default function validate(move, piece) {
   try {
-    const isLegal = isLegalMove(move, piece);
+    validateMove(move, piece);
 
-    return isLegal;
+    return true;
   } catch (err) {
-    console.log(`${err.name}: ${err.message}`);
+    if (err instanceof IllegalMoveError) {
+      console.log(`${err.name}: ${err.message}`);
 
-    return false;
+      return false;
+    }
+
+    throw err;
   }
 }
