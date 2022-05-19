@@ -49,6 +49,7 @@ const CALCULATIONS = {
   isForward,
   isTake,
   hasClearPath,
+  isCastle,
 };
 
 export function calcMiscProperties(move) {

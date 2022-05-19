@@ -46,6 +46,14 @@ describe("getMiscProperties", () => {
 
       expect(result.isForward).toEqual(false);
     });
+
+    it("should catch invalid piece color", () => {
+      const spy = jest.spyOn(console, "log");
+      const move = getMove({ start: "1a", end: "3c", piece: { color: "blah" } });
+      getMiscProperties(move);
+
+      expect(spy).toHaveBeenCalledWith("Invalid piece color.");
+    });
   });
 
   describe("isSameSpace", () => {
@@ -181,6 +189,15 @@ describe("getMiscProperties", () => {
       const result = getMiscProperties(move);
 
       expect(result.hasClearPath).toBe(false);
+    });
+  });
+
+  describe("isCastle", () => {
+    it("todo", () => {
+      const move = getMove({ start: "1a", end: "3c", config: { ...BOARD_EMPTY, "2b": WHITE_PIECE } });
+      const result = getMiscProperties(move);
+
+      expect(result.isCastle).toBe(false);
     });
   });
 });

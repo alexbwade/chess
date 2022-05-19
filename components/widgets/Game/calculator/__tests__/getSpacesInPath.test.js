@@ -47,4 +47,13 @@ describe("getSpacesInPath", () => {
 
     expect(result.spacesInPath).toEqual([]);
   });
+
+  it("should catch infinite loops", () => {
+    const move = getMove({ start: "1a", end: "7c" });
+    move.direction = "invalid";
+
+    expect(() => {
+      getSpacesInPath(move);
+    }).toThrow(Error);
+  });
 });

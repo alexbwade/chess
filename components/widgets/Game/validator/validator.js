@@ -1,15 +1,15 @@
 import { PIECE_TYPES } from "~constants";
-import IllegalMoveError from "./error";
+import IllegalMoveError, { ERROR_SAME_SPACE, ERROR_OCCUPIED } from "./error";
 
 const { BISHOP, KING, KNIGHT, PAWN, QUEEN, ROOK } = PIECE_TYPES;
 
 function isLegalMove(move, piece) {
   if (move.isSameSpace) {
-    throw new IllegalMoveError("This is the same space.");
+    throw new IllegalMoveError(ERROR_SAME_SPACE);
   }
 
   if (move.isFriendlyOccupied) {
-    throw new IllegalMoveError("This space is already occupied by a friendly piece.");
+    throw new IllegalMoveError(ERROR_OCCUPIED);
   }
 
   if ([BISHOP, QUEEN, ROOK].includes(piece.type) && !move.hasClearPath) {
