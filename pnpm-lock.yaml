@@ -5,6 +5,7 @@ specifiers:
   '@babel/eslint-parser': ^7.17.0
   '@babel/preset-env': ^7.17.12
   '@babel/preset-react': ^7.17.12
+  '@next/eslint-plugin-next': ^12.1.6
   '@testing-library/dom': ^8.13.0
   '@testing-library/jest-dom': ^5.16.4
   '@testing-library/react': ^13.2.0
@@ -24,6 +25,7 @@ specifiers:
   jest-environment-jsdom: ^28.1.0
   next: 12.1.6
   prettier: ^2.6.2
+  prop-types: ^15.8.1
   react: 18.1.0
   react-dom: 18.1.0
   regenerator-runtime: ^0.13.9
@@ -33,6 +35,7 @@ specifiers:
 dependencies:
   classnames: 2.3.1
   next: 12.1.6_w6ro3h3ss4j3rwknzgta2uhyza
+  prop-types: 15.8.1
   react: 18.1.0
   react-dom: 18.1.0_react@18.1.0
 
@@ -41,6 +44,7 @@ devDependencies:
   '@babel/eslint-parser': 7.17.0_fn4dzvyq7vsot3o3a6ksoqione
   '@babel/preset-env': 7.17.12_@babel+core@7.17.12
   '@babel/preset-react': 7.17.12_@babel+core@7.17.12
+  '@next/eslint-plugin-next': 12.1.6
   '@testing-library/dom': 8.13.0
   '@testing-library/jest-dom': 5.16.4
   '@testing-library/react': 13.2.0_ef5jwxihqo6n7gxfmzogljlgcm
@@ -4631,7 +4635,6 @@ packages:
   /object-assign/4.1.1:
     resolution: {integrity: sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM=}
     engines: {node: '>=0.10.0'}
-    dev: true
 
   /object-inspect/1.12.0:
     resolution: {integrity: sha512-Ho2z80bVIvJloH+YzRmpZVQe87+qASmBUKZDWgx9cu+KDrX2ZDH/3tMy+gXbZETVGs2M8YdxObOh7XAtim9Y0g==}
@@ -4896,7 +4899,6 @@ packages:
       loose-envify: 1.4.0
       object-assign: 4.1.1
       react-is: 16.13.1
-    dev: true
 
   /psl/1.8.0:
     resolution: {integrity: sha512-RIdOzyoavK+hA18OGGWDqUTsCLhtA7IcZ/6NCs4fFJaHBDab+pDDmDIByWFRQJq2Cd7r1OoQxBGKOaztq+hjIQ==}
@@ -4923,7 +4925,6 @@ packages:
 
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
-    dev: true
 
   /react-is/17.0.2:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}

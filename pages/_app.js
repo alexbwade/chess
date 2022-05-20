@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import "../sass/globals.scss";
 
 function MyApp({ Component, pageProps }) {
-  console.log({ Component, pageProps });
   return <Component {...pageProps} />;
 }
 

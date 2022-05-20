@@ -11,11 +11,11 @@ module.exports = {
     es6: true,
     jest: true,
     node: true,
-    jest: true,
+    "jest/globals": true,
   },
   parser: "@babel/eslint-parser",
   extends: [
-    "next/core-web-vitals",
+    // "next/core-web-vitals",
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:jest/recommended",
@@ -23,6 +23,7 @@ module.exports = {
     "plugin:import/recommended",
     "plugin:css-modules/recommended",
     "plugin:prettier/recommended",
+    "plugin:@next/next/recommended",
   ],
   parserOptions: {
     ecmaVersion: 8,
