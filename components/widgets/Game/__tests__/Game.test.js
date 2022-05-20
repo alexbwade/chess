@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor, waitForElementToBeRemoved } from "@testing-library/react";
+import { render, screen, fireEvent, waitForElementToBeRemoved } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { PIECE_TYPES } from "~constants";

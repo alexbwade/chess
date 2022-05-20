@@ -4,12 +4,12 @@
     "paths": {
       "~constants": ["./constants/index.js"],
       "~utils": ["./utils/index.js"],
+      "~widgets": ["./components/widgets/index.js"],
+      "~elements": ["./components/elements/index.js"],
+      "~partials": ["./components/partials/index.js"],
+      "~templates": ["./components/templates/index.js"],
       "~hooks/*": ["./hooks/*"],
-      "~styles/*": ["./sass/*"],
-      "~widgets/*": ["./components/widgets/*"],
-      "~elements/*": ["./components/elements/*"],
-      "~partials/*": ["./components/partials/*"],
-      "~templates/*": ["./components/templates/*"]
+      "~styles/*": ["./sass/*"]
     }
   }
 }

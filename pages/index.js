@@ -1,3 +1,3 @@
-import Home from "~templates/Home";
+import { Home } from "~templates";
 
 export default Home;
