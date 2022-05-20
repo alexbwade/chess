@@ -1,23 +1,18 @@
 import { useState } from "react";
-import classNames from "classnames";
 
 import { BOARD_EMPTY, BOARD_NEW_GAME } from "./constants";
 import isValidMove from "./validator";
 import getMoveDetails from "./calculator";
 
-import Board from "~widgets/Board";
+import { Board } from "~widgets";
 
 import styles from "./Game.module.scss";
 
 export default function Game() {
   const [config, setConfig] = useState(BOARD_EMPTY);
-  const [moving, setMoving] = useState(false);
   const [fromSquareId, setFromSquareId] = useState(null);
 
-  const moveStart = (squareId) => {
-    setMoving(true);
-    setFromSquareId(squareId);
-  };
+  const moveStart = (squareId) => setFromSquareId(squareId);
 
   const moveEnd = (targetSquareId) => {
     const start = fromSquareId;
@@ -30,7 +25,6 @@ export default function Game() {
       movePiece(start, end);
     }
 
-    setMoving(false);
     setFromSquareId(null);
   };
 
@@ -47,7 +41,7 @@ export default function Game() {
   const clearBoard = () => setConfig(BOARD_EMPTY);
 
   return (
-    <div className={classNames(styles.game, { [styles.moving]: moving })}>
+    <div className={styles.game}>
       <div>
         <button className={styles.button} onClick={setBoard} type="button">
           Start Game

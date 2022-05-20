@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-import ChessGame from "~widgets/Game";
+import { Game as ChessGame } from "~widgets";
 
 import styles from "./Home.module.scss";
 

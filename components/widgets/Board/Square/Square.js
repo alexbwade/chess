@@ -4,7 +4,7 @@ import classNames from "classnames";
 import { COLORS } from "~constants";
 import { ignoreEvent } from "~utils";
 
-import Piece from "~widgets/Piece";
+import { Piece } from "~widgets";
 
 import styles from "./Square.module.scss";
 

@@ -14,7 +14,17 @@ const getAliasedModules = (jsConfig) => {
 };
 
 const getAliasesEslint = (jsConfig) => {
-  return getAliasedModules(jsConfig);
+  const modules = getAliasedModules(jsConfig);
+  const aliases = [];
+
+  for (const [alias, path] of modules) {
+    const formattedAlias = alias.replace("/*", "");
+    const formattedPath = path.replace("/*", "").replace("/index.js", "");
+
+    aliases.push([formattedAlias, formattedPath]);
+  }
+
+  return aliases;
 };
 
 const getAliasesJest = (jsConfig) => {

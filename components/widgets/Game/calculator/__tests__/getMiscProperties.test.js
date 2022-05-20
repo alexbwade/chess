@@ -23,28 +23,28 @@ describe("getMiscProperties", () => {
       const move = getMove({ start: "1a", end: "3c", piece: WHITE_PIECE });
       const result = getMiscProperties(move);
 
-      expect(result.isForward).toEqual(true);
+      expect(result.isForward).toBe(true);
     });
 
     it("should calculate non-forward movement for white piece", () => {
       const move = getMove({ start: "3c", end: "1a", piece: WHITE_PIECE });
       const result = getMiscProperties(move);
 
-      expect(result.isForward).toEqual(false);
+      expect(result.isForward).toBe(false);
     });
 
     it("should calculate forward movement for black piece", () => {
       const move = getMove({ start: "3c", end: "1a", piece: BLACK_PIECE });
       const result = getMiscProperties(move);
 
-      expect(result.isForward).toEqual(true);
+      expect(result.isForward).toBe(true);
     });
 
     it("should calculate non-forward movement for black piece", () => {
       const move = getMove({ start: "1a", end: "3c", piece: BLACK_PIECE });
       const result = getMiscProperties(move);
 
-      expect(result.isForward).toEqual(false);
+      expect(result.isForward).toBe(false);
     });
 
     it("should catch invalid piece color", () => {
@@ -61,14 +61,14 @@ describe("getMiscProperties", () => {
       const move = getMove({ start: "1a", end: "1a" });
       const result = getMiscProperties(move);
 
-      expect(result.isSameSpace).toEqual(true);
+      expect(result.isSameSpace).toBe(true);
     });
 
     it("should calculate movement", () => {
       const move = getMove({ start: "1a", end: "3a" });
       const result = getMiscProperties(move);
 
-      expect(result.isSameSpace).toEqual(false);
+      expect(result.isSameSpace).toBe(false);
     });
   });
 
@@ -84,7 +84,7 @@ describe("getMiscProperties", () => {
       });
       const result = getMiscProperties(move);
 
-      expect(result.isFriendlyOccupied).toEqual(true);
+      expect(result.isFriendlyOccupied).toBe(true);
     });
 
     it("should calculate a move to an enemy-occupied space", () => {
@@ -98,7 +98,7 @@ describe("getMiscProperties", () => {
       });
       const result = getMiscProperties(move);
 
-      expect(result.isFriendlyOccupied).toEqual(false);
+      expect(result.isFriendlyOccupied).toBe(false);
     });
 
     it("should calculate a move to an empty space", () => {
@@ -112,7 +112,7 @@ describe("getMiscProperties", () => {
       });
       const result = getMiscProperties(move);
 
-      expect(result.isFriendlyOccupied).toEqual(false);
+      expect(result.isFriendlyOccupied).toBe(false);
     });
   });
 
@@ -121,21 +121,21 @@ describe("getMiscProperties", () => {
       const move = getMove({ start: "1a", end: "2a" });
       const result = getMiscProperties(move);
 
-      expect(result.isSingleSpace).toEqual(true);
+      expect(result.isSingleSpace).toBe(true);
     });
 
     it("should calculate a non-single space", () => {
       const move = getMove({ start: "1a", end: "1a" });
       const result = getMiscProperties(move);
 
-      expect(result.isSingleSpace).toEqual(false);
+      expect(result.isSingleSpace).toBe(false);
     });
 
     it("should calculate for multiple spaces", () => {
       const move = getMove({ start: "1a", end: "3a" });
       const result = getMiscProperties(move);
 
-      expect(result.isSingleSpace).toEqual(false);
+      expect(result.isSingleSpace).toBe(false);
     });
   });
 
@@ -151,7 +151,7 @@ describe("getMiscProperties", () => {
       });
       const result = getMiscProperties(move);
 
-      expect(result.isTake).toEqual(true);
+      expect(result.isTake).toBe(true);
     });
 
     it("should calculate a non-take (e.g. friendly occupied)", () => {
@@ -165,14 +165,14 @@ describe("getMiscProperties", () => {
       });
       const result = getMiscProperties(move);
 
-      expect(result.isTake).toEqual(false);
+      expect(result.isTake).toBe(false);
     });
 
     it("should calculate a non-take for ordinary movement", () => {
       const move = getMove({ start: "1a", end: "2a" });
       const result = getMiscProperties(move);
 
-      expect(result.isTake).toEqual(false);
+      expect(result.isTake).toBe(false);
     });
   });
 

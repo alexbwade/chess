@@ -1,4 +1,5 @@
 import Image from "next/image";
+import PropTypes from "prop-types";
 
 import PIECE_IMAGES from "./images";
 
@@ -9,3 +10,8 @@ export default function Piece({ color, type }) {
 
   return <Image alt={type} className={styles.piece} src={image} />;
 }
+
+Piece.propTypes = {
+  color: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+};

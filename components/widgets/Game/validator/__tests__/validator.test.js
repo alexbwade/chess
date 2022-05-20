@@ -19,7 +19,6 @@ import validate, { validateMove } from "../validator";
 const { BISHOP, KING, KNIGHT, PAWN, QUEEN, ROOK } = PIECE_TYPES;
 const { BLACK, WHITE } = COLORS;
 
-const WHITE_PAWN = { color: WHITE, type: PAWN };
 const BLACK_PAWN = { color: BLACK, type: PAWN };
 
 const calcMove = ({ start, end, config = BOARD_EMPTY, piece = BLACK_PAWN }) => {
