@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest",
+    "test": "jest --watch",
+    "test:coverage": "jest --coverage",
     "test:ci": "jest --ci --coverage"
   },
   "dependencies": {
@@ -20,14 +21,17 @@
     "@babel/core": "^7.17.12",
     "@babel/preset-env": "^7.17.12",
     "@babel/preset-react": "^7.17.12",
+    "@testing-library/dom": "^8.13.0",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.2.0",
+    "@testing-library/user-event": "^14.2.0",
     "babel-jest": "^28.1.0",
     "eslint": "8.15.0",
     "eslint-config-next": "12.1.6",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^28.1.0",
     "jest-environment-jsdom": "^28.1.0",
+    "regenerator-runtime": "^0.13.9",
     "sass": "^1.51.0",
     "typescript": "^4.6.4"
   }

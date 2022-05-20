@@ -11,19 +11,23 @@ export function isFriendlyOccupied({ config, start, end }) {
 }
 
 export function isSingleSpace({ colDiff, rowDiff }) {
-  return Math.abs(rowDiff) <= 1 && Math.abs(colDiff) <= 1;
+  const rowChange = Math.abs(rowDiff);
+  const colChange = Math.abs(colDiff);
+
+  return rowChange <= 1 && colChange <= 1 && rowChange + colChange >= 1;
 }
 
 export function isForward({ piece, rowDiff }) {
   if (piece.color === BLACK) return rowDiff > 0;
   if (piece.color === WHITE) return rowDiff < 0;
 
+  // todo: probably remove
   console.log("Invalid piece color.");
   return false;
 }
 
-export function isTake({ config, end }) {
-  return !!config[end];
+export function isTake({ config, start, end }) {
+  return !!config[end] && config[start].color !== config[end]?.color;
 }
 
 export function hasClearPath({ config, spacesInPath }) {
@@ -46,6 +50,7 @@ const CALCULATIONS = {
   isForward,
   isTake,
   hasClearPath,
+  isCastle,
 };
 
 export function calcMiscProperties(move) {

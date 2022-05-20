@@ -27,9 +27,7 @@ export default function Board({ config, moveStart, moveEnd }) {
 }
 
 Board.propTypes = {
-  config: PropTypes.object, // todo: define shape
-};
-
-Board.defaultProps = {
-  config: null,
+  config: PropTypes.object.isRequired,
+  moveStart: PropTypes.func.isRequired,
+  moveEnd: PropTypes.func.isRequired,
 };

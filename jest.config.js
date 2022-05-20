@@ -1,9 +1,17 @@
 module.exports = {
   cacheDirectory: ".jest-cache",
   clearMocks: true,
-  collectCoverageFrom: ["<rootDir>/**/*.js"],
+  collectCoverageFrom: ["<rootDir>/components/**/*.js", "<rootDir>/utils/**/*.js"],
   coverageDirectory: "<rootDir>/coverage/",
   coveragePathIgnorePatterns: [],
+  coverageThreshold: {
+    global: {
+      branches: 100,
+      functions: 100,
+      lines: 100,
+      statements: 100,
+    },
+  },
   coverageReporters: ["json-summary", "html"],
   moduleDirectories: ["node_modules", "src"],
   moduleFileExtensions: ["js", "json"],
@@ -23,8 +31,7 @@ module.exports = {
     "^~templates(.*)$": "<rootDir>/components/templates$1",
   },
   reporters: ["default"],
-  setupFiles: ["<rootDir>/jest.setup.js"],
-  setupFilesAfterEnv: ["@testing-library/jest-dom/extend-expect"],
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
   testEnvironment: "jest-environment-jsdom",
   testMatch: ["<rootDir>/**/__tests__/*.test.js"],
   testPathIgnorePatterns: ["/node_modules/"],

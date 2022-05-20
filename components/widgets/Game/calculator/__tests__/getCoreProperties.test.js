@@ -1,7 +1,7 @@
 import getCoreProperties from "../getCoreProperties";
 
 describe("getCoreProperties", () => {
-  test("should calculate expected properties for move: 1a -> 1b", () => {
+  it("should calculate expected properties for move: 1a -> 1b", () => {
     expect(getCoreProperties({ start: "1a", end: "1b" })).toEqual(
       expect.objectContaining({
         colDiff: 1,
@@ -14,7 +14,7 @@ describe("getCoreProperties", () => {
     );
   });
 
-  test("should calculate expected properties for move: 7a -> 4c", () => {
+  it("should calculate expected properties for move: 7a -> 4c", () => {
     expect(getCoreProperties({ start: "7a", end: "4c" })).toEqual(
       expect.objectContaining({
         colDiff: 2,
@@ -27,7 +27,7 @@ describe("getCoreProperties", () => {
     );
   });
 
-  test("should calculate expected properties for move: 6h -> 2a", () => {
+  it("should calculate expected properties for move: 6h -> 2a", () => {
     expect(getCoreProperties({ start: "6h", end: "2a" })).toEqual(
       expect.objectContaining({
         colDiff: -7,
@@ -40,7 +40,7 @@ describe("getCoreProperties", () => {
     );
   });
 
-  test("should calculate expected properties for move: 1h -> 8a", () => {
+  it("should calculate expected properties for move: 1h -> 8a", () => {
     expect(getCoreProperties({ start: "1h", end: "8a" })).toEqual(
       expect.objectContaining({
         colDiff: -7,

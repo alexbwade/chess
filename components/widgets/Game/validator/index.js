@@ -1,3 +1,3 @@
-import validate from "./validate";
+import validate from "./validator";
 
 export default validate;
