@@ -15,7 +15,6 @@ module.exports = {
   },
   parser: "@babel/eslint-parser",
   extends: [
-    // "next/core-web-vitals",
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:jest/recommended",
