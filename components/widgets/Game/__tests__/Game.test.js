@@ -1,5 +1,7 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor, waitForElementToBeRemoved } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+
+import { PIECE_TYPES } from "~constants";
 
 import Game from "../Game";
 
@@ -10,7 +12,25 @@ const drag = (fromSquareId, toSquareId) => {
   fireEvent.drop(getSquare(toSquareId));
 };
 
-const startGame = () => userEvent.click(screen.getByText("Start Game"));
+const startGame = async () => {
+  const startButton = screen.getByText("Start Game");
+
+  userEvent.click(startButton);
+
+  const pawns = await screen.findAllByAltText(PIECE_TYPES.PAWN);
+
+  return pawns.length === 16;
+};
+
+const endGame = async () => {
+  const endButton = screen.getByText("Clear Board");
+
+  userEvent.click(endButton);
+
+  await waitForElementToBeRemoved(() => screen.queryAllByAltText(PIECE_TYPES.PAWN));
+
+  return true;
+};
 
 describe("<Game />", () => {
   it("renders a start button", () => {
@@ -19,12 +39,40 @@ describe("<Game />", () => {
     expect(screen.getByText("Start Game")).toBeInTheDocument();
   });
 
-  // it("allows drag-and-drop of pieces", () => {
-  //   render(<Game />);
+  it("starts a new game", async () => {
+    render(<Game />);
 
-  //   startGame();
-  //   drag("7b", "8b"); // move pawn
+    const started = await startGame();
 
-  //   expect(screen.getByText("Start Game")).toBeInTheDocument();
-  // });
+    expect(started).toBe(true);
+  });
+
+  it("clears an existing game", async () => {
+    render(<Game />);
+
+    await startGame();
+    const ended = await endGame();
+
+    expect(ended).toBe(true);
+  });
+
+  it("allows valid moves", async () => {
+    render(<Game />);
+
+    await startGame();
+
+    drag("7b", "6b"); // move black pawn forward
+
+    expect(getSquare("6b").querySelector("img")).toBeInTheDocument();
+  });
+
+  it("does not allow invalid moves", async () => {
+    render(<Game />);
+
+    await startGame();
+
+    drag("7b", "5b"); // attempt move black pawn forward two spaces
+
+    expect(getSquare("5b").querySelector("img")).not.toBeInTheDocument();
+  });
 });
