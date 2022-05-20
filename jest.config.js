@@ -31,7 +31,6 @@ module.exports = {
     "^~templates(.*)$": "<rootDir>/components/templates$1",
   },
   reporters: ["default"],
-  // setupFiles: ,
   setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
   testEnvironment: "jest-environment-jsdom",
   testMatch: ["<rootDir>/**/__tests__/*.test.js"],

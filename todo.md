@@ -8,7 +8,10 @@
 [x] - Add Jest/RTL
 [x] - PNPM
 [x] - GitHub Actions -> require tests in CI
-[] - GitHub Actions -> require coverage
+[x] - GitHub Actions -> require coverage
+[] - Configure ESLint
+[] - Decouple piece from square a bit more
+[] - Animations for movement
 [] - "Turns"
 [] - FE data structure (users vs 'player 1/2', games, etc.)
 [] - Context vs. Redux??
@@ -22,6 +25,7 @@
 
 [] - Fix ESLint/Prettier not correcting unnecessary template literals
 [] - Fix ESLint not noticing undefined variables
+[] - Fix editor (esp TypeScript) intellisense awful
 
 ## Ideas
 
