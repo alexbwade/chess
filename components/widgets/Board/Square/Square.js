@@ -1,4 +1,4 @@
-import { memo, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 
@@ -12,34 +12,28 @@ import styles from "./Square.module.scss";
 
 const { WHITE, BLACK } = COLORS;
 
-function Square({ color, id }) {
-  console.count(`square render ${id}`);
+export default function Square({ color, id }) {
   const { config, moveStart, moveEnd } = useContext(GameContext);
   const [highlighted, setHighlighted] = useState(false);
 
   const piece = config?.[id];
 
-  const handleStartMoving = () => {
+  const handleDragStart = () => {
     moveStart(id);
-    if (!highlighted) setHighlighted(true);
   };
 
-  const handleStopMoving = () => {
-    setHighlighted(false);
+  const handleDrop = () => {
     moveEnd(id);
+    setHighlighted(false);
   };
 
-  const handleHover = (e) => {
-    e.preventDefault();
-
-    if (!highlighted) setHighlighted(true);
+  const handleDragEnter = () => {
+    setHighlighted(true);
   };
 
   const handleDragLeave = () => {
-    if (highlighted) setHighlighted(false);
+    setHighlighted(false);
   };
-
-  const pieceProps = JSON.parse(piece);
 
   return (
     <div
@@ -51,15 +45,15 @@ function Square({ color, id }) {
         [styles.highlighted]: highlighted,
       })}
       data-testid={`square-${id}`}
-      onDragStart={handleStartMoving}
-      onDrop={handleStopMoving}
+      onDragStart={handleDragStart}
+      onDrop={handleDrop}
       {...handleLegacyDrag}
-      onDragOver={handleHover}
+      onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
     >
       {/* temporarily outputting square ID for development */}
       <strong className={styles.squareId}>{id.toUpperCase()}</strong>
-      {piece ? <Piece {...pieceProps} /> : null}
+      {piece ? <Piece {...piece} /> : null}
     </div>
   );
 }
@@ -73,7 +67,3 @@ Square.propTypes = {
 Square.defaultProps = {
   piece: null,
 };
-
-export default memo(Square, (prevProps, nextProps) => {
-  console.log({ prevProps, nextProps });
-});

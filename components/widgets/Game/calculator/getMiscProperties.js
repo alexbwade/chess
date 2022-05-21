@@ -7,11 +7,7 @@ export function isSameSpace({ start, end }) {
 }
 
 export function isFriendlyOccupied({ config, start, end }) {
-  console.log({ config, start, end, starrttt: config[start], endndd: config[end] });
-  const startPiece = JSON.parse(config[start]);
-  const endPiece = JSON.parse(config[end]) || {};
-
-  return startPiece.color === endPiece.color;
+  return config[start].color === config[end]?.color;
 }
 
 export function isSingleSpace({ colDiff, rowDiff }) {

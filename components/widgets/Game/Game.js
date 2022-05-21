@@ -18,9 +18,7 @@ export default function Game() {
   const moveEnd = (targetSquareId) => {
     const start = fromSquareId;
     const end = targetSquareId;
-    const piece = JSON.parse(config[start]);
-
-    console.log({ config, piece, start, end });
+    const piece = config[start];
 
     const move = getMoveDetails({ config, piece, start, end });
 

@@ -60,7 +60,7 @@ export const BOARD_NEW_GAME = (function () {
   const MAJOR_ROW = [ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK];
   const MINOR_ROW = new Array(8).fill(PAWN);
 
-  const createPieces = (pieceTypes, color) => pieceTypes.map((type) => JSON.stringify({ color, type }));
+  const createPieces = (pieceTypes, color) => pieceTypes.map((type) => ({ color, type }));
 
   const occupiedRows = {
     8: createPieces(MAJOR_ROW, BLACK),

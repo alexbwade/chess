@@ -1,6 +1,4 @@
-import { COLORS } from "~constants";
-
-import { BOARD_EMPTY } from "../../constants";
+import { BOARD_EMPTY, COLORS } from "~constants";
 
 import calculate from "../calculator";
 

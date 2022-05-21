@@ -1,13 +1,13 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 
 import { COLORS, PIECE_TYPES, SQUARES } from "~constants";
-import { ignoreEvent } from "~utils";
+// import { ignoreEvent } from "~utils";
 
 import Square from "../Square";
 
-jest.mock("~utils", () => ({
-  ignoreEvent: jest.fn(),
-}));
+// jest.mock("~utils", () => ({
+//   ignoreEvent: jest.fn(),
+// }));
 
 const { WHITE, BLACK } = COLORS;
 const { PAWN } = PIECE_TYPES;
@@ -43,18 +43,18 @@ describe("<Square />", () => {
     expect(screen.getByText(displayId)).toBeInTheDocument();
   });
 
-  it("ignores dragover and dragenter events", () => {
-    props.piece = { color: WHITE, type: PAWN };
+  // it("ignores dragover and dragenter events", () => {
+  //   props.piece = { color: WHITE, type: PAWN };
 
-    const { container } = render(<Square {...props} />);
+  //   const { container } = render(<Square {...props} />);
 
-    const square = container.firstChild;
+  //   const square = container.firstChild;
 
-    fireEvent.dragOver(square);
-    fireEvent.dragEnter(square);
+  //   fireEvent.dragOver(square);
+  //   fireEvent.dragEnter(square);
 
-    expect(ignoreEvent).toHaveBeenCalledTimes(2);
-  });
+  //   expect(ignoreEvent).toHaveBeenCalledTimes(2);
+  // });
 
   it("starts moving piece on dragStart", () => {
     const { container } = render(<Square {...props} />);

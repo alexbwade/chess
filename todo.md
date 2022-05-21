@@ -9,13 +9,14 @@
 [x] - PNPM
 [x] - GitHub Actions -> require tests in CI
 [x] - GitHub Actions -> require coverage
-[] - Configure ESLint
-[] - Decouple piece from square a bit more
-[] - Animations for movement
+[x] - Configure ESLint
+[x] - Decouple piece from square a bit more
+[x] - Context (fix prop drilling of config)
 [] - "Turns"
+[] - Add error boundary
+[] - Animations for movement
 [] - FE data structure (users vs 'player 1/2', games, etc.)
 [] - Context vs. Redux??
-[] - Context (fix prop drilling of config)
 [] - Auth (AWS + Lambda API...NodeTS?/Go?/Rust/C#?)
 [] - SWR
 [] - Full data model for Chess game
@@ -24,7 +25,7 @@
 ## Fixes
 
 [] - Fix ESLint/Prettier not correcting unnecessary template literals
-[] - Fix ESLint not noticing undefined variables
+[x] - Fix ESLint not noticing undefined variables
 [] - Fix editor (esp TypeScript) intellisense awful
 
 ## Ideas

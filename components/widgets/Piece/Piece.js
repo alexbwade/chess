@@ -7,7 +7,6 @@ import PIECE_IMAGES from "./images";
 import styles from "./Piece.module.scss";
 
 function Piece({ color, type }) {
-  console.count("piece render");
   const image = PIECE_IMAGES[type][color];
 
   return <Image alt={type} className={styles.piece} src={image} />;
