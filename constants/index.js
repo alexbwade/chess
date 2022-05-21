@@ -37,6 +37,17 @@ export const SQUARES = (function () {
   return squares;
 })();
 
+window.SQUARES = SQUARES;
+window.interesting = SQUARES.map((square) => {
+  const [rowStr, col] = square.id.split("");
+  const row = +rowStr;
+
+  const rowIndex = ROWS.indexOf(row) + 1;
+  const colIndex = COLUMNS.indexOf(col) + 1;
+
+  return [(rowIndex * colIndex) % 2, square.color];
+});
+
 export const NUM_SQUARES = SQUARES.length;
 
 export const DIRECTIONS = {

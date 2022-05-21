@@ -4,7 +4,7 @@ import classNames from "classnames";
 
 import { GameContext } from "~context";
 import { COLORS } from "~constants";
-import { handleLegacyDrag } from "~utils";
+import { ignoreEvent } from "~utils";
 
 import { Piece } from "~widgets";
 
@@ -47,9 +47,10 @@ export default function Square({ color, id }) {
       data-testid={`square-${id}`}
       onDragStart={handleDragStart}
       onDrop={handleDrop}
-      {...handleLegacyDrag}
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
+      // for legacy browser reasons, this event must be ignored
+      onDragOver={ignoreEvent}
     >
       {/* temporarily outputting square ID for development */}
       <strong className={styles.squareId}>{id.toUpperCase()}</strong>
@@ -61,9 +62,4 @@ export default function Square({ color, id }) {
 Square.propTypes = {
   color: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  piece: PropTypes.string,
-};
-
-Square.defaultProps = {
-  piece: null,
 };

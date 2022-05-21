@@ -5,6 +5,7 @@
       "~constants": ["./constants/index.js"],
       "~context": ["./context/index.js"],
       "~utils": ["./utils/index.js"],
+      "~test": ["./test/index.js"],
       "~widgets": ["./components/widgets/index.js"],
       "~elements": ["./components/elements/index.js"],
       "~partials": ["./components/partials/index.js"],
