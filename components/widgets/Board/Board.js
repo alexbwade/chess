@@ -1,23 +1,19 @@
-import PropTypes from "prop-types";
-
 import { SQUARES } from "~constants";
 
 import Square from "./Square";
 
 import styles from "./Board.module.scss";
 
-export default function Board({ config, moveStart, moveEnd }) {
+export default function Board() {
   return (
     <div className={styles.wrapper}>
       <div className={styles.board}>
         <div className={styles.top} />
         <div className={styles.left} />
         <div className={styles.grid} data-testid="grid">
-          {SQUARES.map(({ id, color }) => {
-            const piece = config?.[id];
-
-            return <Square color={color} id={id} key={id} piece={piece} moveStart={moveStart} moveEnd={moveEnd} />;
-          })}
+          {SQUARES.map(({ id, color }) => (
+            <Square color={color} id={id} key={id} />
+          ))}
         </div>
         <div className={styles.right} />
         <div className={styles.bottom} />
@@ -25,9 +21,3 @@ export default function Board({ config, moveStart, moveEnd }) {
     </div>
   );
 }
-
-Board.propTypes = {
-  config: PropTypes.object.isRequired,
-  moveStart: PropTypes.func.isRequired,
-  moveEnd: PropTypes.func.isRequired,
-};

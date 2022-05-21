@@ -1,1 +1,1 @@
-export { default as ignoreEvent } from "./ignoreEvent";
+export { default as handleLegacyDrag } from "./handleLegacyDrag";

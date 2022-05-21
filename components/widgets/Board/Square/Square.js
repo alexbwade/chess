@@ -1,8 +1,10 @@
+import { memo, useContext, useState } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 
+import { GameContext } from "~context";
 import { COLORS } from "~constants";
-import { ignoreEvent } from "~utils";
+import { handleLegacyDrag } from "~utils";
 
 import { Piece } from "~widgets";
 
@@ -10,10 +12,34 @@ import styles from "./Square.module.scss";
 
 const { WHITE, BLACK } = COLORS;
 
-export default function Square({ color, id, piece, moveStart, moveEnd }) {
-  const handleStartMoving = () => moveStart(id);
+function Square({ color, id }) {
+  console.count(`square render ${id}`);
+  const { config, moveStart, moveEnd } = useContext(GameContext);
+  const [highlighted, setHighlighted] = useState(false);
 
-  const handleStopMoving = () => moveEnd(id);
+  const piece = config?.[id];
+
+  const handleStartMoving = () => {
+    moveStart(id);
+    if (!highlighted) setHighlighted(true);
+  };
+
+  const handleStopMoving = () => {
+    setHighlighted(false);
+    moveEnd(id);
+  };
+
+  const handleHover = (e) => {
+    e.preventDefault();
+
+    if (!highlighted) setHighlighted(true);
+  };
+
+  const handleDragLeave = () => {
+    if (highlighted) setHighlighted(false);
+  };
+
+  const pieceProps = JSON.parse(piece);
 
   return (
     <div
@@ -22,17 +48,18 @@ export default function Square({ color, id, piece, moveStart, moveEnd }) {
         [styles.white]: color === WHITE,
         [styles.black]: color === BLACK,
         [styles.occupied]: !!piece,
+        [styles.highlighted]: highlighted,
       })}
       data-testid={`square-${id}`}
       onDragStart={handleStartMoving}
       onDrop={handleStopMoving}
-      // needed on dragOver and dragEnter events to allow drop to work (because legacy web silliness)
-      onDragOver={ignoreEvent}
-      onDragEnter={ignoreEvent}
+      {...handleLegacyDrag}
+      onDragOver={handleHover}
+      onDragLeave={handleDragLeave}
     >
       {/* temporarily outputting square ID for development */}
       <strong className={styles.squareId}>{id.toUpperCase()}</strong>
-      {piece ? <Piece {...piece} /> : null}
+      {piece ? <Piece {...pieceProps} /> : null}
     </div>
   );
 }
@@ -40,11 +67,13 @@ export default function Square({ color, id, piece, moveStart, moveEnd }) {
 Square.propTypes = {
   color: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  piece: PropTypes.object,
-  moveStart: PropTypes.func.isRequired,
-  moveEnd: PropTypes.func.isRequired,
+  piece: PropTypes.string,
 };
 
 Square.defaultProps = {
   piece: null,
 };
+
+export default memo(Square, (prevProps, nextProps) => {
+  console.log({ prevProps, nextProps });
+});

@@ -1,10 +1,11 @@
 import { useState } from "react";
 
-import { BOARD_EMPTY, BOARD_NEW_GAME } from "./constants";
+import { BOARD_EMPTY, BOARD_NEW_GAME } from "~constants";
+import { Board } from "~widgets";
+import { GameContext } from "~context";
+
 import isValidMove from "./validator";
 import getMoveDetails from "./calculator";
-
-import { Board } from "~widgets";
 
 import styles from "./Game.module.scss";
 
@@ -17,7 +18,9 @@ export default function Game() {
   const moveEnd = (targetSquareId) => {
     const start = fromSquareId;
     const end = targetSquareId;
-    const piece = config[start];
+    const piece = JSON.parse(config[start]);
+
+    console.log({ config, piece, start, end });
 
     const move = getMoveDetails({ config, piece, start, end });
 
@@ -40,17 +43,25 @@ export default function Game() {
 
   const clearBoard = () => setConfig(BOARD_EMPTY);
 
+  const context = {
+    config,
+    moveStart,
+    moveEnd,
+  };
+
   return (
-    <div className={styles.game}>
-      <div>
-        <button className={styles.button} onClick={setBoard} type="button">
-          Start Game
-        </button>
-        <button className={styles.button} onClick={clearBoard} type="button">
-          Clear Board
-        </button>
+    <GameContext.Provider value={context}>
+      <div className={styles.game}>
+        <div>
+          <button className={styles.button} onClick={setBoard} type="button">
+            Start Game
+          </button>
+          <button className={styles.button} onClick={clearBoard} type="button">
+            Clear Board
+          </button>
+        </div>
+        <Board />
       </div>
-      <Board config={config} moveStart={moveStart} moveEnd={moveEnd} />
-    </div>
+    </GameContext.Provider>
   );
 }

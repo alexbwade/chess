@@ -1,5 +1,4 @@
-import { COLORS, PIECE_TYPES } from "~constants";
-import { BOARD_EMPTY } from "../../constants";
+import { BOARD_EMPTY, COLORS, PIECE_TYPES } from "~constants";
 
 import calculate from "../../calculator";
 import IllegalMoveError, {
