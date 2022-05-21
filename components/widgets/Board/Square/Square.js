@@ -19,6 +19,9 @@ export default function Square({ color, id }) {
   const piece = config?.[id];
 
   const handleDragStart = () => {
+    // todo: revisit drag image
+    // e.dataTransfer.setDragImage(e.target, 10, 10);
+
     moveStart(id);
   };
 
