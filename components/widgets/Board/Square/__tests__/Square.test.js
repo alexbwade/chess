@@ -1,28 +1,23 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { screen, fireEvent } from "@testing-library/react";
 
-import { COLORS, PIECE_TYPES, SQUARES } from "~constants";
+import { renderWithGameContext as render } from "~test";
+import { SQUARES } from "~constants";
 import { ignoreEvent } from "~utils";
 
 import Square from "../Square";
+import styles from "../Square.module.scss";
 
 jest.mock("~utils", () => ({
   ignoreEvent: jest.fn(),
 }));
 
-const { WHITE, BLACK } = COLORS;
-const { PAWN } = PIECE_TYPES;
+const getSquareProps = (id) => SQUARES.find((square) => square.id === id);
 
 describe("<Square />", () => {
   let props;
 
   beforeEach(() => {
-    props = {
-      color: BLACK,
-      id: SQUARES[4].id,
-      piece: null,
-      moveStart: jest.fn(),
-      moveEnd: jest.fn(),
-    };
+    props = getSquareProps("4a");
   });
 
   it("renders a square with no piece", () => {
@@ -34,45 +29,64 @@ describe("<Square />", () => {
   });
 
   it("renders a square with a piece", () => {
-    props.piece = { color: WHITE, type: PAWN };
+    props = getSquareProps("2a");
 
     render(<Square {...props} />);
 
-    const displayId = props.id.toUpperCase();
-
-    expect(screen.getByText(displayId)).toBeInTheDocument();
+    expect(screen.getByRole("img")).toBeInTheDocument();
   });
 
-  it("ignores dragover and dragenter events", () => {
-    props.piece = { color: WHITE, type: PAWN };
-
+  it("ignores dragover event", () => {
     const { container } = render(<Square {...props} />);
 
     const square = container.firstChild;
 
     fireEvent.dragOver(square);
-    fireEvent.dragEnter(square);
 
-    expect(ignoreEvent).toHaveBeenCalledTimes(2);
+    expect(ignoreEvent).toHaveBeenCalledTimes(1);
   });
 
   it("starts moving piece on dragStart", () => {
-    const { container } = render(<Square {...props} />);
+    const moveStart = jest.fn();
+
+    const { container } = render(<Square {...props} />, { moveStart });
 
     const square = container.firstChild;
 
     fireEvent.dragStart(square);
 
-    expect(props.moveStart).toHaveBeenCalledWith(props.id);
+    expect(moveStart).toHaveBeenCalledWith(props.id);
   });
 
   it("stops moving piece on drop", () => {
-    const { container } = render(<Square {...props} />);
+    const moveEnd = jest.fn();
+
+    const { container } = render(<Square {...props} />, { moveEnd });
 
     const square = container.firstChild;
 
     fireEvent.drop(square);
 
-    expect(props.moveEnd).toHaveBeenCalledWith(props.id);
+    expect(moveEnd).toHaveBeenCalledWith(props.id);
+  });
+
+  it("highlights square on drag enter", () => {
+    const { container } = render(<Square {...props} />);
+
+    const square = container.firstChild;
+
+    fireEvent.dragEnter(square);
+
+    expect(square).toHaveClass(styles.highlighted);
+  });
+
+  it("un-highlights square on drag leave", () => {
+    const { container } = render(<Square {...props} />);
+
+    const square = container.firstChild;
+
+    fireEvent.dragLeave(square);
+
+    expect(container).not.toHaveClass(styles.highlighted);
   });
 });

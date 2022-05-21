@@ -1,6 +1,8 @@
+import { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 
+import { GameContext } from "~context";
 import { COLORS } from "~constants";
 import { ignoreEvent } from "~utils";
 
@@ -10,10 +12,31 @@ import styles from "./Square.module.scss";
 
 const { WHITE, BLACK } = COLORS;
 
-export default function Square({ color, id, piece, moveStart, moveEnd }) {
-  const handleStartMoving = () => moveStart(id);
+export default function Square({ color, id }) {
+  const { config, moveStart, moveEnd } = useContext(GameContext);
+  const [highlighted, setHighlighted] = useState(false);
 
-  const handleStopMoving = () => moveEnd(id);
+  const piece = config?.[id];
+
+  const handleDragStart = () => {
+    // todo: revisit drag image
+    // e.dataTransfer.setDragImage(e.target, 10, 10);
+
+    moveStart(id);
+  };
+
+  const handleDrop = () => {
+    moveEnd(id);
+    setHighlighted(false);
+  };
+
+  const handleDragEnter = () => {
+    setHighlighted(true);
+  };
+
+  const handleDragLeave = () => {
+    setHighlighted(false);
+  };
 
   return (
     <div
@@ -22,13 +45,15 @@ export default function Square({ color, id, piece, moveStart, moveEnd }) {
         [styles.white]: color === WHITE,
         [styles.black]: color === BLACK,
         [styles.occupied]: !!piece,
+        [styles.highlighted]: highlighted,
       })}
       data-testid={`square-${id}`}
-      onDragStart={handleStartMoving}
-      onDrop={handleStopMoving}
-      // needed on dragOver and dragEnter events to allow drop to work (because legacy web silliness)
+      onDragStart={handleDragStart}
+      onDrop={handleDrop}
+      onDragEnter={handleDragEnter}
+      onDragLeave={handleDragLeave}
+      // for legacy browser reasons, this event must be ignored
       onDragOver={ignoreEvent}
-      onDragEnter={ignoreEvent}
     >
       {/* temporarily outputting square ID for development */}
       <strong className={styles.squareId}>{id.toUpperCase()}</strong>
@@ -40,11 +65,4 @@ export default function Square({ color, id, piece, moveStart, moveEnd }) {
 Square.propTypes = {
   color: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  piece: PropTypes.object,
-  moveStart: PropTypes.func.isRequired,
-  moveEnd: PropTypes.func.isRequired,
-};
-
-Square.defaultProps = {
-  piece: null,
 };

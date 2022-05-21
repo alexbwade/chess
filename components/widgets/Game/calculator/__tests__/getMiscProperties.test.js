@@ -1,11 +1,10 @@
-import { COLORS } from "~constants";
+import { BOARD_EMPTY, COLORS } from "~constants";
 
 import getCoreProperties from "../getCoreProperties";
 import getDirection from "../getDirection";
 import getSpacesInPath from "../getSpacesInPath";
 
 import getMiscProperties from "../getMiscProperties";
-import { BOARD_EMPTY } from "../../constants";
 
 const { BLACK, WHITE } = COLORS;
 const WHITE_PIECE = { color: WHITE };
