@@ -9,7 +9,7 @@ import styles from "./Piece.module.scss";
 function Piece({ color, type }) {
   const image = PIECE_IMAGES[type][color];
 
-  return <Image alt={type} className={styles.piece} src={image} />;
+  return <Image alt={type} className={styles.piece} draggable="true" src={image} />;
 }
 
 Piece.propTypes = {
