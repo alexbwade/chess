@@ -1,4 +1,4 @@
-import { BOARD_EMPTY, COLORS } from "~constants";
+import { BOARD_EMPTY, COLORS, STATUSES } from "~constants";
 
 import getCoreProperties from "../getCoreProperties";
 import getDirection from "../getDirection";
@@ -7,14 +7,15 @@ import getSpacesInPath from "../getSpacesInPath";
 import getMiscProperties from "../getMiscProperties";
 
 const { BLACK, WHITE } = COLORS;
+const { PLAYER_1, PLAYER_2 } = STATUSES;
 const WHITE_PIECE = { color: WHITE };
 const BLACK_PIECE = { color: BLACK };
 
-const getMove = ({ start, end, config = BOARD_EMPTY, piece = BLACK_PIECE }) => {
+const getMove = ({ start, end, config = BOARD_EMPTY, piece = BLACK_PIECE, status = PLAYER_2, player = PLAYER_2 }) => {
   // assume the starting position contains the moving piece
   config[start] = piece;
 
-  return getSpacesInPath(getDirection(getCoreProperties({ start, end, config, piece })));
+  return getSpacesInPath(getDirection(getCoreProperties({ start, end, config, piece, status, player })));
 };
 
 describe("getMiscProperties", () => {
@@ -198,6 +199,38 @@ describe("getMiscProperties", () => {
       const result = getMiscProperties(move);
 
       expect(result.isCastle).toBe(false);
+    });
+  });
+
+  describe("isYourTurn", () => {
+    it("should calculate that it's currently your turn", () => {
+      const move = getMove({ start: "1a", end: "3c", status: PLAYER_2 });
+      const result = getMiscProperties(move);
+
+      expect(result.isYourTurn).toBe(true);
+    });
+
+    it("should calculate that it's currently NOT your turn", () => {
+      const move = getMove({ start: "1a", end: "3c", status: PLAYER_1 });
+      const result = getMiscProperties(move);
+
+      expect(result.isYourTurn).toBe(false);
+    });
+  });
+
+  describe("isYourPiece", () => {
+    it("should calculate that the piece belongs to you", () => {
+      const move = getMove({ start: "1a", end: "3c", piece: BLACK_PIECE, player: PLAYER_2 });
+      const result = getMiscProperties(move);
+
+      expect(result.isYourPiece).toBe(true);
+    });
+
+    it("should calculate that the piece does NOT belong to you", () => {
+      const move = getMove({ start: "1a", end: "3c", piece: BLACK_PIECE, player: PLAYER_1 });
+      const result = getMiscProperties(move);
+
+      expect(result.isYourPiece).toBe(false);
     });
   });
 });
