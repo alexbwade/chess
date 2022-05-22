@@ -48,11 +48,11 @@ describe("getMiscProperties", () => {
     });
 
     it("should catch invalid piece color", () => {
-      const spy = jest.spyOn(console, "log");
       const move = getMove({ start: "1a", end: "3c", piece: { color: "blah" } });
-      getMiscProperties(move);
 
-      expect(spy).toHaveBeenCalledWith("Invalid piece color.");
+      expect(() => {
+        getMiscProperties(move);
+      }).toThrow("Invalid piece color.");
     });
   });
 

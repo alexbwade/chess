@@ -8,12 +8,12 @@ const { PLAYER_1, PLAYER_2 } = STATUSES;
 export function updateBoard(board, move) {
   const { config, status } = board;
   const { start, end, player } = move;
-
   const piece = config[start];
+  const details = { config, piece, start, end, player, status };
 
-  const moveDetails = calculate({ config, piece, start, end, player, status });
+  const event = calculate(details);
 
-  validate(moveDetails, piece);
+  validate(event, piece);
 
   const newConfig = {
     ...config,

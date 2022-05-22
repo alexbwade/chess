@@ -21,9 +21,7 @@ export function isForward({ piece, rowDiff }) {
   if (piece.color === BLACK) return rowDiff > 0;
   if (piece.color === WHITE) return rowDiff < 0;
 
-  // todo: probably remove
-  console.log("Invalid piece color.");
-  return false;
+  throw new Error("Invalid piece color.");
 }
 
 export function isTake({ config, start, end }) {

@@ -47,7 +47,7 @@ export default function getDirection(move) {
   return {
     ...move,
     direction,
-    // quick access properties
+    // quick-access properties
     isVertical: direction === VERTICAL,
     isHorizontal: direction === HORIZONTAL,
     isDiagonal: direction === DIAGONAL,
