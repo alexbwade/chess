@@ -7,13 +7,13 @@ const { PLAYER_1, PLAYER_2 } = STATUSES;
 
 export function updateBoard(board, move) {
   const { config, status } = board;
-  const { start, end } = move;
+  const { start, end, player } = move;
 
   const piece = config[start];
 
-  const moveDetails = calculate({ config, piece, start, end });
+  const moveDetails = calculate({ config, piece, start, end, player, status });
 
-  validate(moveDetails, piece); // && piece.color === status
+  validate(moveDetails, piece);
 
   const newConfig = {
     ...config,

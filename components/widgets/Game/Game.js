@@ -11,6 +11,8 @@ import styles from "./Game.module.scss";
 const { PLAYER_1 } = STATUSES;
 
 export default function Game() {
+  const player = PLAYER_1; // todo: this will probably need to be stateful
+
   const [config, setConfig] = useState(BOARD_EMPTY);
   const [status, setStatus] = useState(null);
   const [source, setSource] = useState(null);
@@ -20,7 +22,7 @@ export default function Game() {
 
   const moveEnd = (dest) => {
     const board = { config, status };
-    const move = { start: source, end: dest };
+    const move = { player, start: source, end: dest };
 
     try {
       const newBoard = updateBoard(board, move);
@@ -28,7 +30,6 @@ export default function Game() {
       setConfig(newBoard.config);
       setStatus(newBoard.status);
     } catch (err) {
-      console.log(err);
       setError(err.message);
     }
 

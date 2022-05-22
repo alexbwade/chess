@@ -43,6 +43,15 @@ export function isCastle() {
   return false;
 }
 
+export function isYourTurn({ piece, status }) {
+  // todo: add coverage
+  return piece.color === status;
+}
+
+export function isYourPiece({ player, status }) {
+  return player === status;
+}
+
 const CALCULATIONS = {
   isSingleSpace,
   isSameSpace,
@@ -51,6 +60,8 @@ const CALCULATIONS = {
   isTake,
   hasClearPath,
   isCastle,
+  isYourTurn,
+  isYourPiece,
 };
 
 export function calcMiscProperties(move) {

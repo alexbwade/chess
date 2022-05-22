@@ -8,7 +8,7 @@ const { PAWN } = PIECE_TYPES;
 
 describe("updateBoard", () => {
   it("should return the new board state after a valid move", () => {
-    const move = { start: "2a", end: "3a" };
+    const move = { start: "2a", end: "3a", player: PLAYER_1 };
     const board = {
       config: BOARD_NEW_GAME,
       status: PLAYER_1,
@@ -22,8 +22,8 @@ describe("updateBoard", () => {
     });
   });
 
-  it("should return the original board state after an invalid move", () => {
-    const move = { start: "7a", end: "6a" };
+  it("should update player turn", () => {
+    const move = { start: "7a", end: "6a", player: PLAYER_2 };
     const board = {
       config: BOARD_NEW_GAME,
       status: PLAYER_2,

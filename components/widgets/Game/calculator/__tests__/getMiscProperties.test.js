@@ -13,6 +13,7 @@ const BLACK_PIECE = { color: BLACK };
 const getMove = ({ start, end, config = BOARD_EMPTY, piece = BLACK_PIECE }) => {
   // assume the starting position contains the moving piece
   config[start] = piece;
+
   return getSpacesInPath(getDirection(getCoreProperties({ start, end, config, piece })));
 };
 

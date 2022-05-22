@@ -3,6 +3,8 @@ import IllegalMoveError, {
   ERROR_SAME_SPACE,
   ERROR_OCCUPIED,
   ERROR_BLOCKED,
+  ERROR_NOT_YOUR_PIECE,
+  ERROR_NOT_YOUR_TURN,
   ERROR_BISHOP,
   ERROR_KING,
   ERROR_KNIGHT,
@@ -14,6 +16,14 @@ import IllegalMoveError, {
 const { BISHOP, KING, KNIGHT, PAWN, QUEEN, ROOK } = PIECE_TYPES;
 
 export default function validate(move, piece) {
+  if (!move.isYourTurn) {
+    throw new IllegalMoveError(ERROR_NOT_YOUR_TURN);
+  }
+
+  if (!move.isYourPiece) {
+    throw new IllegalMoveError(ERROR_NOT_YOUR_PIECE);
+  }
+
   if (move.isSameSpace) {
     throw new IllegalMoveError(ERROR_SAME_SPACE);
   }
