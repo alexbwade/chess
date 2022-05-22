@@ -1,48 +1,53 @@
 import { useState } from "react";
 
-import { BOARD_EMPTY, BOARD_NEW_GAME } from "~constants";
+import { BOARD_EMPTY, BOARD_NEW_GAME, STATUSES } from "~constants";
 import { Board } from "~widgets";
 import { GameContext } from "~context";
 
-import isValidMove from "./validator";
-import getMoveDetails from "./calculator";
+import { updateBoard } from "./helpers";
 
 import styles from "./Game.module.scss";
 
+const { PLAYER_1 } = STATUSES;
+
 export default function Game() {
   const [config, setConfig] = useState(BOARD_EMPTY);
-  const [fromSquareId, setFromSquareId] = useState(null);
+  const [status, setStatus] = useState(null);
+  const [source, setSource] = useState(null);
+  const [error, setError] = useState(null);
 
-  const moveStart = (squareId) => setFromSquareId(squareId);
+  const moveStart = (squareId) => setSource(squareId);
 
-  const moveEnd = (targetSquareId) => {
-    const start = fromSquareId;
-    const end = targetSquareId;
-    const piece = config[start];
+  const moveEnd = (dest) => {
+    const board = { config, status };
+    const move = { start: source, end: dest };
 
-    const move = getMoveDetails({ config, piece, start, end });
+    try {
+      const newBoard = updateBoard(board, move);
 
-    if (isValidMove(move, piece)) {
-      movePiece(start, end);
+      setConfig(newBoard.config);
+      setStatus(newBoard.status);
+    } catch (err) {
+      console.log(err);
+      setError(err.message);
     }
 
-    setFromSquareId(null);
+    setSource(null);
   };
 
-  const movePiece = (start, end) => {
-    setConfig({
-      ...config,
-      [start]: null,
-      [end]: config[start],
-    });
+  const newGame = () => {
+    setConfig(BOARD_NEW_GAME);
+    setStatus(PLAYER_1);
   };
 
-  const setBoard = () => setConfig(BOARD_NEW_GAME);
-
-  const clearBoard = () => setConfig(BOARD_EMPTY);
+  const endGame = () => {
+    setConfig(BOARD_EMPTY);
+    setStatus(null);
+  };
 
   const context = {
     config,
+    status,
     moveStart,
     moveEnd,
   };
@@ -51,10 +56,11 @@ export default function Game() {
     <GameContext.Provider value={context}>
       <div className={styles.game}>
         <div>
-          <button className={styles.button} onClick={setBoard} type="button">
+          {error}
+          <button className={styles.button} onClick={newGame} type="button">
             Start Game
           </button>
-          <button className={styles.button} onClick={clearBoard} type="button">
+          <button className={styles.button} onClick={endGame} type="button">
             Clear Board
           </button>
         </div>

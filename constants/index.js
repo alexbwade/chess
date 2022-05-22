@@ -82,3 +82,8 @@ export const BOARD_NEW_GAME = (function () {
 
   return board;
 })();
+
+export const STATUSES = {
+  PLAYER_1: COLORS.WHITE,
+  PLAYER_2: COLORS.BLACK,
+};

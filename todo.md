@@ -12,7 +12,8 @@
 [x] - Configure ESLint
 [x] - Decouple piece from square a bit more
 [x] - Context (fix prop drilling of config)
-[] - "Turns"
+[] - "Turns" (enum status = P1, P2, END)
+[] - single i/o for currentConfig -> newConfig (validation throws error to handler in component)
 [] - Add error boundary
 [] - Animations for movement
 [] - FE data structure (users vs 'player 1/2', games, etc.)

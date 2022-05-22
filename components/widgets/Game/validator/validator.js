@@ -13,7 +13,7 @@ import IllegalMoveError, {
 
 const { BISHOP, KING, KNIGHT, PAWN, QUEEN, ROOK } = PIECE_TYPES;
 
-export function validateMove(move, piece) {
+export default function validate(move, piece) {
   if (move.isSameSpace) {
     throw new IllegalMoveError(ERROR_SAME_SPACE);
   }
@@ -89,20 +89,4 @@ export function validateMove(move, piece) {
   }
 
   return true;
-}
-
-export default function validate(move, piece) {
-  try {
-    validateMove(move, piece);
-
-    return true;
-  } catch (err) {
-    if (err instanceof IllegalMoveError) {
-      console.log(`${err.name}: ${err.message}`);
-
-      return false;
-    }
-
-    throw err;
-  }
 }

@@ -13,7 +13,7 @@ import IllegalMoveError, {
   ERROR_ROOK,
 } from "../error";
 
-import validate, { validateMove } from "../validator";
+import validateMove from "../validator";
 
 const { BISHOP, KING, KNIGHT, PAWN, QUEEN, ROOK } = PIECE_TYPES;
 const { BLACK, WHITE } = COLORS;
@@ -27,6 +27,22 @@ const calcMove = ({ start, end, config = BOARD_EMPTY, piece = BLACK_PAWN }) => {
 };
 
 const getErr = (err) => `IllegalMoveError: ${err}`;
+
+function validate(move, piece) {
+  try {
+    validateMove(move, piece);
+
+    return true;
+  } catch (err) {
+    if (err instanceof IllegalMoveError) {
+      console.log(`${err.name}: ${err.message}`);
+
+      return false;
+    }
+
+    throw err;
+  }
+}
 
 describe("validator", () => {
   let conSpy;
@@ -84,7 +100,7 @@ describe("validator", () => {
   });
 
   describe("sad path", () => {
-    it("throws an illegal move error 'under the hood'", () => {
+    it("throws an IllegalMoveError", () => {
       const [move, piece] = calcMove({ start: "1a", end: "1a" });
 
       expect(() => {
