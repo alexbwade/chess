@@ -28,7 +28,7 @@ export default function validate(move, piece) {
     throw new IllegalMoveError(ERROR_SAME_SPACE);
   }
 
-  if (move.isFriendlyOccupied) {
+  if (move.isOccupied) {
     throw new IllegalMoveError(ERROR_OCCUPIED);
   }
 
@@ -55,7 +55,7 @@ export default function validate(move, piece) {
     }
 
     case KNIGHT: {
-      if (!move.isL) {
+      if (!move.isLShaped) {
         throw new IllegalMoveError(ERROR_KNIGHT);
       }
       break;

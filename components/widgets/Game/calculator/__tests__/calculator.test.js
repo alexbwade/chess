@@ -18,15 +18,15 @@ describe("calculator", () => {
 
     expect(calculate(move)).toEqual(
       expect.objectContaining({
-        colDiff: 1,
-        rowDiff: 0,
-        currentColIndex: 0,
-        currentRowIndex: 7,
-        targetColIndex: 1,
-        targetRowIndex: 7,
+        colDelta: 1,
+        rowDelta: 0,
+        prevColIndex: 0,
+        prevRowIndex: 7,
+        nextColIndex: 1,
+        nextRowIndex: 7,
         isSingleSpace: true,
         isTake: false,
-        isFriendlyOccupied: false,
+        isOccupied: false,
       })
     );
   });
@@ -36,15 +36,15 @@ describe("calculator", () => {
 
     expect(calculate(move)).toEqual(
       expect.objectContaining({
-        colDiff: 2,
-        rowDiff: 3,
-        currentColIndex: 0,
-        currentRowIndex: 1,
-        targetColIndex: 2,
-        targetRowIndex: 4,
+        colDelta: 2,
+        rowDelta: 3,
+        prevColIndex: 0,
+        prevRowIndex: 1,
+        nextColIndex: 2,
+        nextRowIndex: 4,
         isDiagonal: false,
         isHorizontal: false,
-        isL: false,
+        isLShaped: false,
       })
     );
   });
@@ -54,13 +54,13 @@ describe("calculator", () => {
 
     expect(calculate(move)).toEqual(
       expect.objectContaining({
-        colDiff: -7,
-        rowDiff: 4,
-        currentColIndex: 7,
-        currentRowIndex: 2,
-        targetColIndex: 0,
-        targetRowIndex: 6,
-        isFriendlyOccupied: true,
+        colDelta: -7,
+        rowDelta: 4,
+        prevColIndex: 7,
+        prevRowIndex: 2,
+        nextColIndex: 0,
+        nextRowIndex: 6,
+        isOccupied: true,
         isTake: false,
         isSingleSpace: false,
         isSameSpace: false,
@@ -73,13 +73,13 @@ describe("calculator", () => {
 
     expect(calculate(move)).toEqual(
       expect.objectContaining({
-        colDiff: -7,
-        rowDiff: -7,
-        currentColIndex: 7,
-        currentRowIndex: 7,
-        targetColIndex: 0,
-        targetRowIndex: 0,
-        isFriendlyOccupied: false,
+        colDelta: -7,
+        rowDelta: -7,
+        prevColIndex: 7,
+        prevRowIndex: 7,
+        nextColIndex: 0,
+        nextRowIndex: 0,
+        isOccupied: false,
         isTake: true,
         isSingleSpace: false,
         isSameSpace: false,

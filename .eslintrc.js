@@ -33,7 +33,7 @@ module.exports = {
     requireConfigFile: false,
   },
   rules: {
-    quotes: [OFF],
+    quotes: [ERROR, "double"],
     eqeqeq: [ERROR, ALWAYS],
     "no-eval": [ERROR],
     "prefer-const": [ERROR],

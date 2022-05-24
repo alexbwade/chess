@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-import { BOARD_EMPTY, BOARD_NEW_GAME, STATUSES } from "~constants";
+import { BOARD_EMPTY, BOARD_NEW_GAME, BOARD_TEST, PLAYERS } from "~constants";
 import { Board } from "~widgets";
 import { GameContext } from "~context";
 
@@ -8,27 +8,33 @@ import { updateBoard } from "./helpers";
 
 import styles from "./Game.module.scss";
 
-const { PLAYER_1 } = STATUSES;
+const { PLAYER_1 } = PLAYERS;
 
 export default function Game() {
-  const player = PLAYER_1; // todo: this will probably need to be stateful
-
+  // game state
+  const [player, setPlayer] = useState(null); // todo: this should make sense
+  // board state
   const [config, setConfig] = useState(BOARD_EMPTY);
-  const [status, setStatus] = useState(null);
-  const [source, setSource] = useState(null);
+  // const [status, setStatus] = useState(null);
+  const [turn, setTurn] = useState(null);
   const [error, setError] = useState(null);
+
+  const [source, setSource] = useState(null);
+
+  console.log({ turn, player });
 
   const moveStart = (squareId) => setSource(squareId);
 
   const moveEnd = (dest) => {
-    const board = { config, status };
+    const board = { config, turn };
     const move = { player, start: source, end: dest };
 
     try {
       const newBoard = updateBoard(board, move);
 
       setConfig(newBoard.config);
-      setStatus(newBoard.status);
+      setTurn(newBoard.turn);
+      setPlayer(newBoard.turn); // temp
     } catch (err) {
       setError(err.message);
     }
@@ -37,21 +43,27 @@ export default function Game() {
   };
 
   const newGame = () => {
+    // setConfig(BOARD_TEST);
     setConfig(BOARD_NEW_GAME);
-    setStatus(PLAYER_1);
+    setTurn(PLAYER_1);
+    setPlayer(PLAYER_1); // temp
   };
 
   const endGame = () => {
     setConfig(BOARD_EMPTY);
-    setStatus(null);
+    setTurn(null);
   };
 
   const context = {
     config,
-    status,
+    turn,
     moveStart,
     moveEnd,
   };
+
+  // useEffect(() => {
+  //   newGame();
+  // }, []);
 
   return (
     <GameContext.Provider value={context}>

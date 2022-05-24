@@ -1,8 +1,8 @@
-import { BOARD_NEW_GAME, COLORS, PIECE_TYPES, STATUSES } from "~constants";
+import { BOARD_NEW_GAME, COLORS, PIECE_TYPES, PLAYERS } from "~constants";
 
 import { updateBoard } from "../helpers";
 
-const { PLAYER_1, PLAYER_2 } = STATUSES;
+const { PLAYER_1, PLAYER_2 } = PLAYERS;
 const { WHITE, BLACK } = COLORS;
 const { PAWN } = PIECE_TYPES;
 
@@ -11,14 +11,14 @@ describe("updateBoard", () => {
     const move = { start: "2a", end: "3a", player: PLAYER_1 };
     const board = {
       config: BOARD_NEW_GAME,
-      status: PLAYER_1,
+      turn: PLAYER_1,
     };
 
     expect(updateBoard(board, move)).toEqual({
       config: expect.objectContaining({
         "3a": { color: WHITE, type: PAWN },
       }),
-      status: PLAYER_2,
+      turn: PLAYER_2,
     });
   });
 
@@ -26,14 +26,14 @@ describe("updateBoard", () => {
     const move = { start: "7a", end: "6a", player: PLAYER_2 };
     const board = {
       config: BOARD_NEW_GAME,
-      status: PLAYER_2,
+      turn: PLAYER_2,
     };
 
     expect(updateBoard(board, move)).toEqual({
       config: expect.objectContaining({
         "6a": { color: BLACK, type: PAWN },
       }),
-      status: PLAYER_1,
+      turn: PLAYER_1,
     });
   });
 });

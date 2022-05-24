@@ -1,4 +1,4 @@
-import { BOARD_EMPTY, COLORS, PIECE_TYPES, STATUSES } from "~constants";
+import { BOARD_EMPTY, COLORS, PIECE_TYPES, PLAYERS } from "~constants";
 
 import calculate from "../../calculator";
 import IllegalMoveError, {
@@ -17,7 +17,7 @@ import IllegalMoveError, {
 
 import validateMove from "../validator";
 
-const { PLAYER_1, PLAYER_2 } = STATUSES;
+const { PLAYER_1, PLAYER_2 } = PLAYERS;
 const { BISHOP, KING, KNIGHT, PAWN, QUEEN, ROOK } = PIECE_TYPES;
 const { BLACK, WHITE } = COLORS;
 
@@ -29,11 +29,11 @@ const calcMove = ({
   player = PLAYER_2,
   config = { ...BOARD_EMPTY },
   piece = BLACK_PAWN,
-  status = PLAYER_2,
+  turn = PLAYER_2,
 }) => {
   config[start] = piece;
 
-  const moveDetails = calculate({ start, end, player, config, status, piece });
+  const moveDetails = calculate({ start, end, player, config, turn, piece });
 
   return [moveDetails, piece];
 };
@@ -83,7 +83,7 @@ describe("validator", () => {
         start: "1a",
         end: "2a",
         piece: movingPiece,
-        status: PLAYER_1,
+        turn: PLAYER_1,
         player: PLAYER_1,
       });
 
@@ -116,13 +116,18 @@ describe("validator", () => {
 
     describe("generic errors", () => {
       it("should error if not the player's turn", () => {
-        const [move, piece] = calcMove({ start: "2a", end: "3a", status: PLAYER_1 });
+        const [move, piece] = calcMove({ start: "2a", end: "3a", player: PLAYER_2, turn: PLAYER_1 });
 
         expect(validate(move, piece)).toBe(getErr(ERROR_NOT_YOUR_TURN));
       });
 
       it("should error if not the player's piece", () => {
-        const [move, piece] = calcMove({ start: "2a", end: "3a", player: PLAYER_1 });
+        const [move, piece] = calcMove({
+          start: "2a",
+          end: "3a",
+          player: PLAYER_2,
+          piece: { color: WHITE, type: PAWN },
+        });
 
         expect(validate(move, piece)).toBe(getErr(ERROR_NOT_YOUR_PIECE));
       });
@@ -193,7 +198,7 @@ describe("validator", () => {
           start: "1a",
           end: "2b",
           piece: movingPiece,
-          status: PLAYER_1,
+          turn: PLAYER_1,
           player: PLAYER_1,
         });
 

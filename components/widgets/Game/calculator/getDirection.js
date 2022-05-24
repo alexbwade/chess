@@ -10,13 +10,13 @@ function isVertical({ start, end }) {
   return start[1] === end[1];
 }
 
-function isDiagonal({ colDiff, rowDiff }) {
-  return Math.abs(colDiff) === Math.abs(rowDiff);
+function isDiagonal({ colDelta, rowDelta }) {
+  return Math.abs(colDelta) === Math.abs(rowDelta);
 }
 
-function isL({ colDiff, rowDiff }) {
-  const rowAbsDiff = Math.abs(rowDiff);
-  const colAbsDiff = Math.abs(colDiff);
+function isLShaped({ colDelta, rowDelta }) {
+  const rowAbsDiff = Math.abs(rowDelta);
+  const colAbsDiff = Math.abs(colDelta);
 
   return (rowAbsDiff === 2 && colAbsDiff === 1) || (rowAbsDiff === 1 && colAbsDiff === 2);
 }
@@ -32,7 +32,7 @@ function getDirectionProperty(move) {
     case isDiagonal(move): {
       return DIAGONAL;
     }
-    case isL(move): {
+    case isLShaped(move): {
       return L_SHAPE;
     }
     default: {
@@ -51,6 +51,6 @@ export default function getDirection(move) {
     isVertical: direction === VERTICAL,
     isHorizontal: direction === HORIZONTAL,
     isDiagonal: direction === DIAGONAL,
-    isL: direction === L_SHAPE,
+    isLShaped: direction === L_SHAPE,
   };
 }

@@ -9,7 +9,7 @@ const getIncrementer = (diff) => {
 };
 
 export function getSpacesInPathProperty(move) {
-  const { currentRowIndex, currentColIndex, direction, targetRowIndex, targetColIndex, rowDiff, colDiff } = move;
+  const { direction, prevRowIndex, prevColIndex, nextRowIndex, nextColIndex, rowDelta, colDelta } = move;
 
   const results = [];
 
@@ -18,14 +18,14 @@ export function getSpacesInPathProperty(move) {
     return results;
   }
 
-  const rowIncrementer = getIncrementer(rowDiff);
-  const colIncrementer = getIncrementer(colDiff);
+  const rowIncrementer = getIncrementer(rowDelta);
+  const colIncrementer = getIncrementer(colDelta);
 
-  let thisRowIndex = currentRowIndex + rowIncrementer;
-  let thisColIndex = currentColIndex + colIncrementer;
+  let thisRowIndex = prevRowIndex + rowIncrementer;
+  let thisColIndex = prevColIndex + colIncrementer;
   let iterations = 0;
 
-  while (!(thisRowIndex === targetRowIndex && thisColIndex === targetColIndex)) {
+  while (!(thisRowIndex === nextRowIndex && thisColIndex === nextColIndex)) {
     const rowId = ROWS[thisRowIndex];
     const colId = COLUMNS[thisColIndex];
     const squareId = `${rowId}${colId}`;

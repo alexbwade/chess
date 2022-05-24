@@ -83,7 +83,33 @@ export const BOARD_NEW_GAME = (function () {
   return board;
 })();
 
-export const STATUSES = {
+export const BOARD_TEST = (function () {
+  const board = { ...BOARD_EMPTY };
+
+  const TEST_ROW = [ROOK, KNIGHT, BISHOP, QUEEN, KING, PAWN, PAWN, PAWN];
+
+  const createPieces = (pieceTypes, color) => pieceTypes.map((type) => ({ color, type }));
+
+  const occupiedRows = {
+    7: createPieces(TEST_ROW, WHITE),
+    2: createPieces(TEST_ROW, BLACK),
+  };
+
+  const setRow = (row, pieces) => {
+    for (const col of COLUMNS) {
+      const squareId = `${row}${col}`;
+      board[squareId] = pieces.shift();
+    }
+  };
+
+  Object.entries(occupiedRows).forEach(([row, set]) => {
+    setRow(row, set);
+  });
+
+  return board;
+})();
+
+export const PLAYERS = {
   PLAYER_1: COLORS.WHITE,
   PLAYER_2: COLORS.BLACK,
 };
