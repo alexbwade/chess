@@ -44,6 +44,7 @@ export const DIRECTIONS = {
   HORIZONTAL: "horizontal",
   VERTICAL: "vertical",
   L_SHAPE: "l_shape",
+  NONE: "none",
   OTHER: "other",
 };
 
@@ -112,4 +113,10 @@ export const BOARD_TEST = (function () {
 export const PLAYERS = {
   PLAYER_1: COLORS.WHITE,
   PLAYER_2: COLORS.BLACK,
+};
+
+export const STATUSES = {
+  CLEAR: "check",
+  CHECK: "check",
+  CHECKMATE: "checkmate",
 };

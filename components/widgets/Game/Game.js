@@ -11,14 +11,11 @@ import styles from "./Game.module.scss";
 const { PLAYER_1 } = PLAYERS;
 
 export default function Game() {
-  // game state
   const [player, setPlayer] = useState(null); // todo: this should make sense
-  // board state
   const [config, setConfig] = useState(BOARD_EMPTY);
-  // const [status, setStatus] = useState(null);
+  const [status, setStatus] = useState(null);
   const [turn, setTurn] = useState(null);
   const [error, setError] = useState(null);
-
   const [source, setSource] = useState(null);
 
   console.log({ turn, player });
@@ -26,7 +23,7 @@ export default function Game() {
   const moveStart = (squareId) => setSource(squareId);
 
   const moveEnd = (dest) => {
-    const board = { config, turn };
+    const board = { config, status, turn };
     const move = { player, start: source, end: dest };
 
     try {
@@ -35,6 +32,7 @@ export default function Game() {
       setConfig(newBoard.config);
       setTurn(newBoard.turn);
       setPlayer(newBoard.turn); // temp
+      setStatus(newBoard.status);
     } catch (err) {
       setError(err.message);
     }
@@ -69,7 +67,10 @@ export default function Game() {
     <GameContext.Provider value={context}>
       <div className={styles.game}>
         <div>
-          {error}
+          <div>{status}</div>
+          <div>{error}</div>
+        </div>
+        <div>
           <button className={styles.button} onClick={newGame} type="button">
             Start Game
           </button>
