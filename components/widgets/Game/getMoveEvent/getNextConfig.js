@@ -18,8 +18,11 @@ function isPawnReachingEnd({ piece, nextRowIndex }) {
   return false;
 }
 
-export default function getNextConfig(move) {
-  let piece = move.config[move.start];
+export default function getNextConfig(board, move) {
+  const { start, end } = move;
+  const { config } = board;
+
+  let piece = config[start];
 
   if (isPawnReachingEnd(move)) {
     // todo: test that this is a NEW piece

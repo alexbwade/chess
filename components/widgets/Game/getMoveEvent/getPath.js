@@ -8,8 +8,8 @@ const getIncrementer = (diff) => {
   return 0;
 };
 
-export default function getSpacesInPath(numbers, direction) {
-  const { prevRowIndex, prevColIndex, nextRowIndex, nextColIndex, rowDelta, colDelta } = numbers;
+export default function getPath(deltas, direction) {
+  const { prevRowIndex, prevColIndex, nextRowIndex, nextColIndex, rowDelta, colDelta } = deltas;
 
   const results = [];
 

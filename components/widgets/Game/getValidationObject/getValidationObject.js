@@ -2,23 +2,22 @@ import { STATUSES } from "~constants";
 
 const { CHECK } = STATUSES;
 
-export default function getMoveEvent(board, moveDetails) {
-  const { config, status, turn } = board;
-  const { start, end, player, nextConfig, nextStatus } = moveDetails;
-  const piece = config[start];
+export default function getValidationObject(event) {
+  const { player, start, end, prevConfig, prevStatus, prevTurn, nextStatus } = event;
+  const piece = prevConfig[start];
 
   // player
-  const isYourTurn = player === turn;
+  const isYourTurn = player === prevTurn;
   const isYourPiece = player === piece.color;
 
   // status
-  const wereChecked = status === CHECK;
+  const wereChecked = prevStatus === CHECK;
   const areChecked = nextStatus === CHECK;
   const stillChecked = wereChecked && areChecked;
 
   // piece interactions
-  const isOccupied = piece.color === config[end]?.color;
-  const isTake = !!config[end] && piece.color !== config[end]?.color;
+  const isOccupied = piece.color === prevConfig[end]?.color;
+  const isTake = !!prevConfig[end] && piece.color !== prevConfig[end]?.color;
 
   return {
     isYourTurn,
