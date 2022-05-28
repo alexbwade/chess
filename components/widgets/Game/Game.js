@@ -18,8 +18,6 @@ export default function Game() {
   const [error, setError] = useState(null);
   const [source, setSource] = useState(null);
 
-  console.log({ turn, player });
-
   const moveStart = (squareId) => setSource(squareId);
 
   const moveEnd = (dest) => {
@@ -35,6 +33,7 @@ export default function Game() {
       setStatus(newBoard.status);
     } catch (err) {
       setError(err.message);
+      console.log(err);
     }
 
     setSource(null);

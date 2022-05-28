@@ -12,33 +12,40 @@ import IllegalMoveError, {
   ERROR_QUEEN,
   ERROR_ROOK,
 } from "./error";
+import getValidationObject from "./getValidationObject";
 
 const { BISHOP, KING, KNIGHT, PAWN, QUEEN, ROOK } = PIECE_TYPES;
 
-export default function validate(move, piece) {
-  if (!move.isYourTurn) {
+export default function validate(event) {
+  const validationObject = getValidationObject(event);
+
+  const { piece } = validationObject;
+
+  console.log({ event, validationObject });
+
+  if (!validationObject.isYourTurn) {
     throw new IllegalMoveError(ERROR_NOT_YOUR_TURN);
   }
 
-  if (!move.isYourPiece) {
+  if (!validationObject.isYourPiece) {
     throw new IllegalMoveError(ERROR_NOT_YOUR_PIECE);
   }
 
-  if (move.isSameSpace) {
+  if (validationObject.isSameSpace) {
     throw new IllegalMoveError(ERROR_SAME_SPACE);
   }
 
-  if (move.isOccupied) {
+  if (validationObject.isOccupied) {
     throw new IllegalMoveError(ERROR_OCCUPIED);
   }
 
-  if ([BISHOP, QUEEN, ROOK].includes(piece.type) && !move.hasClearPath) {
+  if ([BISHOP, QUEEN, ROOK].includes(piece.type) && !validationObject.hasClearPath) {
     throw new IllegalMoveError(ERROR_BLOCKED);
   }
 
   switch (piece.type) {
     case BISHOP: {
-      if (!move.isDiagonal) {
+      if (!validationObject.isDiagonal) {
         throw new IllegalMoveError(ERROR_BISHOP);
       }
 
@@ -46,7 +53,7 @@ export default function validate(move, piece) {
     }
 
     case KING: {
-      const isValidMove = move.isSingleSpace || move.isCastle;
+      const isValidMove = validationObject.isSingleSpace || validationObject.isCastle;
       if (!isValidMove) {
         throw new IllegalMoveError(ERROR_KING);
       }
@@ -55,17 +62,18 @@ export default function validate(move, piece) {
     }
 
     case KNIGHT: {
-      if (!move.isLShaped) {
+      if (!validationObject.isLShaped) {
         throw new IllegalMoveError(ERROR_KNIGHT);
       }
       break;
     }
 
     case PAWN: {
-      const isSingleSpaceForward = move.isForward && move.isSingleSpace;
-      const isRegularAdvance = isSingleSpaceForward && move.isVertical && !move.isTake;
-      const isEnemyKill = isSingleSpaceForward && move.isDiagonal && move.isTake;
-      const isValidMove = isRegularAdvance || isEnemyKill;
+      const isSingleSpaceForward = validationObject.isForward && validationObject.isSingleSpace;
+      const isRegularAdvance = isSingleSpaceForward && validationObject.isVertical && !validationObject.isTake;
+      const isInitialAdvance = !piece.moved && validationObject.isForward && validationObject.isTwoSpaces;
+      const isEnemyKill = isSingleSpaceForward && validationObject.isDiagonal && validationObject.isTake;
+      const isValidMove = isRegularAdvance || isInitialAdvance || isEnemyKill;
 
       if (!isValidMove) {
         throw new IllegalMoveError(ERROR_PAWN);
@@ -74,7 +82,8 @@ export default function validate(move, piece) {
     }
 
     case QUEEN: {
-      const isValidDirection = move.isDiagonal || move.isHorizontal || move.isVertical;
+      const isValidDirection =
+        validationObject.isDiagonal || validationObject.isHorizontal || validationObject.isVertical;
 
       if (!isValidDirection) {
         throw new IllegalMoveError(ERROR_QUEEN);
@@ -84,7 +93,7 @@ export default function validate(move, piece) {
     }
 
     case ROOK: {
-      const isValidDirection = move.isHorizontal || move.isVertical;
+      const isValidDirection = validationObject.isHorizontal || validationObject.isVertical;
 
       if (!isValidDirection) {
         throw new IllegalMoveError(ERROR_ROOK);

@@ -8,23 +8,23 @@ import getNextStatus from "./getNextStatus";
 
 const { PLAYER_1, PLAYER_2 } = PLAYERS;
 
-export default function getMoveEvent(board, move) {
+export default function calcMoveEvent(board, move) {
   const deltas = getDeltas(move);
   const direction = getDirection(deltas);
   const path = getPath(deltas, direction);
 
-  const nextConfig = getNextConfig(board, move); // check castle in here independently
+  const nextConfig = getNextConfig({ board, move, deltas }); // check castle in here independently
   const nextStatus = getNextStatus(nextConfig); // normal, check, checkmate
-  const nextTurn = move.config.turn === PLAYER_1 ? PLAYER_2 : PLAYER_1;
+  const nextTurn = board.config.turn === PLAYER_1 ? PLAYER_2 : PLAYER_1;
 
   return {
     ...move,
-    prevConfig: board.config,
-    prevStatus: board.status,
-    prevTurn: board.turn,
     deltas,
     direction,
     path,
+    prevConfig: board.config,
+    prevStatus: board.status,
+    prevTurn: board.turn,
     nextConfig,
     nextStatus,
     nextTurn,

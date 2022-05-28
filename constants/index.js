@@ -116,7 +116,7 @@ export const PLAYERS = {
 };
 
 export const STATUSES = {
-  CLEAR: "check",
+  CLEAR: "clear",
   CHECK: "check",
   CHECKMATE: "checkmate",
 };

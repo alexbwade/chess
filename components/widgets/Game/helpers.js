@@ -1,15 +1,12 @@
-import getMoveEvent from "./getMoveEvent";
-import getValidationObject from "./getValidationObject";
-import validate from "./validator";
+import calcMoveEvent from "./calcMoveEvent";
+// import getValidationObject from "./getValidationObject";
+import validate from "./validation";
 
 export function updateBoard(board, move) {
   // calculate data about move (including outcome)
-  const event = getMoveEvent(board, move);
+  const event = calcMoveEvent(board, move);
 
-  // create validation object from move event
-  const validationObject = getValidationObject(event);
-
-  validate(validationObject); // game, move-generic, move-specific
+  validate(event);
 
   return {
     status: event.nextStatus,

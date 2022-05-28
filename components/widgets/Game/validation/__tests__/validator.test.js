@@ -1,6 +1,6 @@
 import { BOARD_EMPTY, COLORS, PIECE_TYPES, PLAYERS } from "~constants";
 
-import calculate from "../../calculator";
+// import calculate from "../../calculator";
 import IllegalMoveError, {
   ERROR_SAME_SPACE,
   ERROR_OCCUPIED,
@@ -15,7 +15,7 @@ import IllegalMoveError, {
   ERROR_ROOK,
 } from "../error";
 
-import validateMove from "../validator";
+import validateMove from "../validate";
 
 const { PLAYER_1, PLAYER_2 } = PLAYERS;
 const { BISHOP, KING, KNIGHT, PAWN, QUEEN, ROOK } = PIECE_TYPES;
