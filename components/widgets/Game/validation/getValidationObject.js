@@ -4,7 +4,7 @@ const { CHECK } = STATUSES;
 const { WHITE } = COLORS;
 const { VERTICAL, HORIZONTAL, DIAGONAL, L_SHAPE, NONE, OTHER } = DIRECTIONS;
 
-export function hasClearPath({ config, path }) {
+export function isClearPath({ config, path }) {
   return path.every((space) => {
     const occupied = !!config[space];
 
@@ -27,6 +27,8 @@ export default function getValidationObject(event) {
   } = event;
   const piece = prevConfig[start];
 
+  const isNumSpaces = (n) => rowChange <= n && colChange <= n && rowChange + colChange >= n;
+
   // player
   const isYourTurn = player === prevTurn;
   const isYourPiece = player === piece.color;
@@ -38,10 +40,10 @@ export default function getValidationObject(event) {
 
   // movement
   const isSameSpace = start === end;
-  const isSingleSpace = rowChange <= 1 && colChange <= 1 && rowChange + colChange >= 1;
-  const isTwoSpaces = rowChange <= 2 && colChange <= 2 && rowChange + colChange >= 2;
+  const isSingleSpace = isNumSpaces(1);
+  const isTwoSpaces = isNumSpaces(2);
   const isForward = piece.color === WHITE ? rowDelta < 0 : rowDelta > 0;
-  const hasClearPath = path.every((space) => !prevConfig[space]);
+  const isClearPath = path.every((space) => !prevConfig[space]);
 
   // direction
   const isVertical = direction === VERTICAL;
@@ -67,7 +69,7 @@ export default function getValidationObject(event) {
     isSingleSpace,
     isTwoSpaces,
     isForward,
-    hasClearPath,
+    isClearPath,
     // direction
     isVertical,
     isHorizontal,

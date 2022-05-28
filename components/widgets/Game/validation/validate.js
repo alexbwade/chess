@@ -39,7 +39,7 @@ export default function validate(event) {
     throw new IllegalMoveError(ERROR_OCCUPIED);
   }
 
-  if ([BISHOP, QUEEN, ROOK].includes(piece.type) && !validationObject.hasClearPath) {
+  if ([BISHOP, QUEEN, ROOK].includes(piece.type) && !validationObject.isClearPath) {
     throw new IllegalMoveError(ERROR_BLOCKED);
   }
 
