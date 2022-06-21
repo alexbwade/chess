@@ -1,6 +1,6 @@
-import { BOARD_EMPTY, COLORS, PIECE_TYPES, PLAYERS } from "~constants";
+import { BOARD_TEST, COLORS, PIECE_TYPES, PLAYERS, STATUSES } from "~constants";
+import calcMoveEvent from "../../calcMoveEvent";
 
-// import calculate from "../../calculator";
 import IllegalMoveError, {
   ERROR_SAME_SPACE,
   ERROR_OCCUPIED,
@@ -17,25 +17,19 @@ import IllegalMoveError, {
 
 import validateMove from "../validate";
 
-const { PLAYER_1, PLAYER_2 } = PLAYERS;
+const { WHITE } = COLORS;
 const { BISHOP, KING, KNIGHT, PAWN, QUEEN, ROOK } = PIECE_TYPES;
-const { BLACK, WHITE } = COLORS;
+const { PLAYER_1, PLAYER_2 } = PLAYERS;
+const { CLEAR } = STATUSES;
 
-const BLACK_PAWN = { color: BLACK, type: PAWN };
+const getMockEvent = (moveProps, boardProps) => {
+  const defaultBoard = { config: { ...BOARD_TEST }, status: CLEAR, turn: PLAYER_1 };
+  const defaultMove = { start: "2c", end: "3c", player: PLAYER_1 };
 
-const calcMove = ({
-  start,
-  end,
-  player = PLAYER_2,
-  config = { ...BOARD_EMPTY },
-  piece = BLACK_PAWN,
-  turn = PLAYER_2,
-}) => {
-  config[start] = piece;
+  const board = { ...defaultBoard, ...boardProps };
+  const move = { ...defaultMove, ...moveProps };
 
-  const moveDetails = calculate({ start, end, player, config, turn, piece });
-
-  return [moveDetails, piece];
+  return calcMoveEvent(board, move);
 };
 
 const getErr = (err) => `IllegalMoveError: ${err}`;
@@ -57,166 +51,126 @@ function validate(move, piece) {
 describe("validator", () => {
   describe("happy path", () => {
     it(`should allow a valid ${BISHOP} move`, () => {
-      const movingPiece = { type: BISHOP, color: BLACK };
-      const [move, piece] = calcMove({ start: "1a", end: "4d", piece: movingPiece });
+      const event = getMockEvent({ start: "1c", end: "3e" });
 
-      expect(validate(move, piece)).toBe(true);
+      expect(validate(event)).toBe(true);
     });
 
     it(`should allow a valid ${KING} move`, () => {
-      const movingPiece = { type: KING, color: BLACK };
-      const [move, piece] = calcMove({ start: "1a", end: "2b", piece: movingPiece });
+      const event = getMockEvent({ start: "1e", end: "2e" });
 
-      expect(validate(move, piece)).toBe(true);
+      expect(validate(event)).toBe(true);
     });
 
     it(`should allow a valid ${KNIGHT} move`, () => {
-      const movingPiece = { type: KNIGHT, color: BLACK };
-      const [move, piece] = calcMove({ start: "1a", end: "2c", piece: movingPiece });
+      const event = getMockEvent({ start: "1b", end: "3c" });
 
-      expect(validate(move, piece)).toBe(true);
+      expect(validate(event)).toBe(true);
     });
 
     it(`should allow a valid ${PAWN} move`, () => {
-      const movingPiece = { type: PAWN, color: WHITE };
-      const [move, piece] = calcMove({
-        start: "1a",
-        end: "2a",
-        piece: movingPiece,
-        turn: PLAYER_1,
-        player: PLAYER_1,
-      });
+      const event = getMockEvent({ start: "2c", end: "3c" });
 
-      expect(validate(move, piece)).toBe(true);
+      expect(validate(event)).toBe(true);
+    });
+
+    it(`should allow a valid ${PAWN} take/capture`, () => {
+      const event = getMockEvent({ start: "7f", end: "8g" });
+
+      expect(validate(event)).toBe(true);
     });
 
     it(`should allow a valid ${QUEEN} move`, () => {
-      const movingPiece = { type: QUEEN, color: BLACK };
-      const [move, piece] = calcMove({ start: "1a", end: "8h", piece: movingPiece });
+      const event = getMockEvent({ start: "1d", end: "4g" });
 
-      expect(validate(move, piece)).toBe(true);
+      expect(validate(event)).toBe(true);
     });
 
     it(`should allow a valid ${ROOK} move`, () => {
-      const movingPiece = { type: ROOK, color: BLACK };
-      const [move, piece] = calcMove({ start: "1a", end: "8a", piece: movingPiece });
+      const event = getMockEvent({ start: "1a", end: "6a" });
 
-      expect(validate(move, piece)).toBe(true);
+      expect(validate(event)).toBe(true);
     });
   });
 
   describe("sad path", () => {
-    it("throws an IllegalMoveError", () => {
-      const [move, piece] = calcMove({ start: "1a", end: "1a" });
-
-      expect(() => {
-        validateMove(move, piece);
-      }).toThrow(IllegalMoveError);
-    });
-
     describe("generic errors", () => {
       it("should error if not the player's turn", () => {
-        const [move, piece] = calcMove({ start: "2a", end: "3a", player: PLAYER_2, turn: PLAYER_1 });
+        const event = getMockEvent({ start: "1b", end: "3c" }, { turn: PLAYER_2 });
 
-        expect(validate(move, piece)).toBe(getErr(ERROR_NOT_YOUR_TURN));
+        expect(validate(event)).toBe(getErr(ERROR_NOT_YOUR_TURN));
       });
 
       it("should error if not the player's piece", () => {
-        const [move, piece] = calcMove({
-          start: "2a",
-          end: "3a",
-          player: PLAYER_2,
-          piece: { color: WHITE, type: PAWN },
-        });
+        const event = getMockEvent({ start: "8c", end: "5f" });
 
-        expect(validate(move, piece)).toBe(getErr(ERROR_NOT_YOUR_PIECE));
+        expect(validate(event)).toBe(getErr(ERROR_NOT_YOUR_PIECE));
       });
 
       it("should error on same-space movements", () => {
-        const [move, piece] = calcMove({ start: "1a", end: "1a" });
+        const event = getMockEvent({ start: "1d", end: "1d" });
 
-        expect(validate(move, piece)).toBe(getErr(ERROR_SAME_SPACE));
+        expect(validate(event)).toBe(getErr(ERROR_SAME_SPACE));
       });
 
       it("should error if moving to friendly-occupied space", () => {
-        const [move, piece] = calcMove({ start: "1a", end: "2a", config: { ...BOARD_EMPTY, "2a": BLACK_PAWN } });
+        const event = getMockEvent({ start: "1h", end: "1g" });
 
-        expect(validate(move, piece)).toBe(getErr(ERROR_OCCUPIED));
+        expect(validate(event)).toBe(getErr(ERROR_OCCUPIED));
       });
 
       it("should error if path not clear", () => {
-        const movingPiece = { color: BLACK, type: BISHOP };
-        const [move, piece] = calcMove({
-          start: "1a",
-          end: "3c",
-          piece: movingPiece,
-          config: { ...BOARD_EMPTY, "2b": BLACK_PAWN },
-        });
+        const event = getMockEvent({ start: "1d", end: "5d" });
 
-        expect(validate(move, piece)).toBe(getErr(ERROR_BLOCKED));
+        expect(validate(event)).toBe(getErr(ERROR_BLOCKED));
       });
 
       it("should error if invalid piece", () => {
-        const movingPiece = { color: BLACK, type: "weird" };
-        const [move, piece] = calcMove({
-          start: "1a",
-          end: "3c",
-          piece: movingPiece,
-        });
+        const INVALID_PIECE_TYPE = "blererg";
+        const event = getMockEvent(
+          { start: "1d", end: "5d" },
+          { config: { ...BOARD_TEST, "1d": { type: INVALID_PIECE_TYPE, color: WHITE } } }
+        );
 
-        expect(() => {
-          validate(move, piece);
-        }).toThrow(TypeError);
+        expect(() => validate(event)).toThrow(TypeError);
       });
     });
 
     describe("piece-specific errors", () => {
       it(`should not allow an invalid ${BISHOP} move`, () => {
-        const movingPiece = { type: BISHOP, color: BLACK };
-        const [move, piece] = calcMove({ start: "1a", end: "4a", piece: movingPiece });
+        const event = getMockEvent({ start: "1f", end: "3f" });
 
-        expect(validate(move, piece)).toBe(getErr(ERROR_BISHOP));
+        expect(validate(event)).toBe(getErr(ERROR_BISHOP));
       });
 
       it(`should not allow an invalid ${KING} move`, () => {
-        const movingPiece = { type: KING, color: BLACK };
-        const [move, piece] = calcMove({ start: "1a", end: "3c", piece: movingPiece });
+        const event = getMockEvent({ start: "1e", end: "3e" });
 
-        expect(validate(move, piece)).toBe(getErr(ERROR_KING));
+        expect(validate(event)).toBe(getErr(ERROR_KING));
       });
 
       it(`should not allow an invalid ${KNIGHT} move`, () => {
-        const movingPiece = { type: KNIGHT, color: BLACK };
-        const [move, piece] = calcMove({ start: "1a", end: "2b", piece: movingPiece });
+        const event = getMockEvent({ start: "1b", end: "2b" });
 
-        expect(validate(move, piece)).toBe(getErr(ERROR_KNIGHT));
+        expect(validate(event)).toBe(getErr(ERROR_KNIGHT));
       });
 
       it(`should not allow an invalid ${PAWN} move`, () => {
-        const movingPiece = { type: PAWN, color: WHITE };
-        const [move, piece] = calcMove({
-          start: "1a",
-          end: "2b",
-          piece: movingPiece,
-          turn: PLAYER_1,
-          player: PLAYER_1,
-        });
+        const event = getMockEvent({ start: "2c", end: "2d" });
 
-        expect(validate(move, piece)).toBe(getErr(ERROR_PAWN));
+        expect(validate(event)).toBe(getErr(ERROR_PAWN));
       });
 
       it(`should not allow an invalid ${QUEEN} move`, () => {
-        const movingPiece = { type: QUEEN, color: BLACK };
-        const [move, piece] = calcMove({ start: "1a", end: "8f", piece: movingPiece });
+        const event = getMockEvent({ start: "1d", end: "3e" });
 
-        expect(validate(move, piece)).toBe(getErr(ERROR_QUEEN));
+        expect(validate(event)).toBe(getErr(ERROR_QUEEN));
       });
 
       it(`should not allow an invalid ${ROOK} move`, () => {
-        const movingPiece = { type: ROOK, color: BLACK };
-        const [move, piece] = calcMove({ start: "1a", end: "8h", piece: movingPiece });
+        const event = getMockEvent({ start: "1h", end: "4e" });
 
-        expect(validate(move, piece)).toBe(getErr(ERROR_ROOK));
+        expect(validate(event)).toBe(getErr(ERROR_ROOK));
       });
     });
   });

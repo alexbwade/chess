@@ -71,8 +71,8 @@ describe("<Game />", () => {
 
     await startGame();
 
-    drag("2b", "4b"); // attempt move white pawn forward two spaces
+    drag("2b", "5b"); // attempt move white pawn forward three spaces
 
-    expect(getSquare("4b").querySelector("img")).not.toBeInTheDocument();
+    expect(getSquare("5b").querySelector("img")).not.toBeInTheDocument();
   });
 });

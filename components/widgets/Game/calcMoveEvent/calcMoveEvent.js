@@ -14,8 +14,8 @@ export default function calcMoveEvent(board, move) {
   const path = getPath(deltas, direction);
 
   const nextConfig = getNextConfig({ board, move, deltas }); // check castle in here independently
-  const nextStatus = getNextStatus(nextConfig); // normal, check, checkmate
-  const nextTurn = board.config.turn === PLAYER_1 ? PLAYER_2 : PLAYER_1;
+  const nextStatus = getNextStatus(nextConfig); // clear, check, checkmate
+  const nextTurn = board.turn === PLAYER_1 ? PLAYER_2 : PLAYER_1;
 
   return {
     ...move,

@@ -21,8 +21,6 @@ export default function validate(event) {
 
   const { piece } = validationObject;
 
-  console.log({ event, validationObject });
-
   if (!validationObject.isYourTurn) {
     throw new IllegalMoveError(ERROR_NOT_YOUR_TURN);
   }

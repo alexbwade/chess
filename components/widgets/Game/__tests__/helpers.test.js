@@ -1,10 +1,11 @@
-import { BOARD_NEW_GAME, COLORS, PIECE_TYPES, PLAYERS } from "~constants";
+import { BOARD_NEW_GAME, COLORS, PIECE_TYPES, PLAYERS, STATUSES } from "~constants";
 
 import { updateBoard } from "../helpers";
 
 const { PLAYER_1, PLAYER_2 } = PLAYERS;
 const { WHITE, BLACK } = COLORS;
 const { PAWN } = PIECE_TYPES;
+const { CLEAR } = STATUSES;
 
 describe("updateBoard", () => {
   it("should return the new board state after a valid move", () => {
@@ -16,8 +17,9 @@ describe("updateBoard", () => {
 
     expect(updateBoard(board, move)).toEqual({
       config: expect.objectContaining({
-        "3a": { color: WHITE, type: PAWN },
+        "3a": { color: WHITE, type: PAWN, moved: true },
       }),
+      status: CLEAR,
       turn: PLAYER_2,
     });
   });
@@ -31,8 +33,9 @@ describe("updateBoard", () => {
 
     expect(updateBoard(board, move)).toEqual({
       config: expect.objectContaining({
-        "6a": { color: BLACK, type: PAWN },
+        "6a": { color: BLACK, type: PAWN, moved: true },
       }),
+      status: CLEAR,
       turn: PLAYER_1,
     });
   });

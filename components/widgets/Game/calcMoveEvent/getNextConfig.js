@@ -1,7 +1,7 @@
 import { COLORS, PIECE_TYPES, ROWS } from "~constants";
 
 const { WHITE, BLACK } = COLORS;
-const { QUEEN, KING, ROOK, PAWN } = PIECE_TYPES;
+const { QUEEN, PAWN } = PIECE_TYPES;
 
 function isPawnReachingEnd(piece, deltas) {
   const { nextRowIndex } = deltas;
@@ -24,12 +24,10 @@ export default function getNextConfig({ board, move, deltas }) {
   const { start, end } = move;
   const { config } = board;
 
-  const copiedConfig = { ...config };
-  // might need to copy config here, may need immutability
-  let piece = { ...copiedConfig[start] };
+  const copiedConfig = JSON.parse(JSON.stringify(config));
+  let piece = copiedConfig[start];
 
   if (isPawnReachingEnd(piece, deltas)) {
-    // todo: test that the resulting piece is a NEW object
     piece = {
       ...piece,
       type: QUEEN,
@@ -43,6 +41,14 @@ export default function getNextConfig({ board, move, deltas }) {
     [start]: null,
     [end]: piece,
   };
+
+  // if (isValidCastleAttempt(piece, deltas)) {
+  //   nextConfig = {
+  //     ...nextConfig,
+  //     [rookStart]: null,
+  //     [rookEnd]: rook;
+  //   }
+  // }
 
   return nextConfig;
 }

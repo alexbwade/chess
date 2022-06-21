@@ -1,16 +1,9 @@
-import { COLORS, DIRECTIONS, STATUSES } from "~constants";
+// import { COLORS, DIRECTIONS, STATUSES } from "~constants";
+import { COLORS, DIRECTIONS } from "~constants";
 
-const { CHECK } = STATUSES;
+// const { CHECK } = STATUSES;
 const { WHITE } = COLORS;
-const { VERTICAL, HORIZONTAL, DIAGONAL, L_SHAPE, NONE, OTHER } = DIRECTIONS;
-
-export function isClearPath({ config, path }) {
-  return path.every((space) => {
-    const occupied = !!config[space];
-
-    return !occupied;
-  });
-}
+const { VERTICAL, HORIZONTAL, DIAGONAL, L_SHAPE } = DIRECTIONS;
 
 export default function getValidationObject(event) {
   const {
@@ -21,9 +14,9 @@ export default function getValidationObject(event) {
     direction,
     path,
     prevConfig,
-    prevStatus,
+    // prevStatus,
     prevTurn,
-    nextStatus,
+    // nextStatus,
   } = event;
   const piece = prevConfig[start];
 
@@ -34,22 +27,22 @@ export default function getValidationObject(event) {
   const isYourPiece = player === piece.color;
 
   // status
-  const wereChecked = prevStatus === CHECK;
-  const areChecked = nextStatus === CHECK;
-  const stillChecked = wereChecked && areChecked;
-
-  // movement
-  const isSameSpace = start === end;
-  const isSingleSpace = isNumSpaces(1);
-  const isTwoSpaces = isNumSpaces(2);
-  const isForward = piece.color === WHITE ? rowDelta < 0 : rowDelta > 0;
-  const isClearPath = path.every((space) => !prevConfig[space]);
+  // const wereChecked = prevStatus === CHECK;
+  // const areChecked = nextStatus === CHECK;
+  // const stillChecked = wereChecked && areChecked;
 
   // direction
   const isVertical = direction === VERTICAL;
   const isHorizontal = direction === HORIZONTAL;
   const isDiagonal = direction === DIAGONAL;
   const isLShaped = direction === L_SHAPE;
+
+  // movement
+  const isSameSpace = start === end; // equivalent to (direction === NONE);
+  const isSingleSpace = isNumSpaces(1);
+  const isTwoSpaces = isNumSpaces(2);
+  const isForward = piece.color === WHITE ? rowDelta < 0 : rowDelta > 0;
+  const isClearPath = path.every((space) => !prevConfig[space]);
 
   // piece interactions
   const isOccupied = piece.color === prevConfig[end]?.color;
@@ -61,9 +54,9 @@ export default function getValidationObject(event) {
     isYourTurn,
     isYourPiece,
     // status
-    wereChecked,
-    areChecked,
-    stillChecked,
+    // wereChecked,
+    // areChecked,
+    // stillChecked,
     // movement
     isSameSpace,
     isSingleSpace,

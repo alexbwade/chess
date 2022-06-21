@@ -35,6 +35,12 @@ describe("getDirection", () => {
     expect(result).toBe(L_SHAPE);
   });
 
+  it(`calculates alternate ${L_SHAPE} movements`, () => {
+    const result = getDirection({ rowChange: 1, colChange: 2 });
+
+    expect(result).toBe(L_SHAPE);
+  });
+
   it(`calculates ${OTHER} movements`, () => {
     const result = getDirection({ rowChange: 2, colChange: 5 });
 

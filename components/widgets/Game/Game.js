@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-import { BOARD_EMPTY, BOARD_NEW_GAME, BOARD_TEST, PLAYERS } from "~constants";
+import { BOARD_EMPTY, BOARD_NEW_GAME, PLAYERS } from "~constants";
 import { Board } from "~widgets";
 import { GameContext } from "~context";
 
@@ -11,7 +11,7 @@ import styles from "./Game.module.scss";
 const { PLAYER_1 } = PLAYERS;
 
 export default function Game() {
-  const [player, setPlayer] = useState(null); // todo: this should make sense
+  const [player, setPlayer] = useState(null); // todo: this should actually make sense
   const [config, setConfig] = useState(BOARD_EMPTY);
   const [status, setStatus] = useState(null);
   const [turn, setTurn] = useState(null);
@@ -29,7 +29,7 @@ export default function Game() {
 
       setConfig(newBoard.config);
       setTurn(newBoard.turn);
-      setPlayer(newBoard.turn); // temp
+      setPlayer(newBoard.turn); // temporary
       setStatus(newBoard.status);
     } catch (err) {
       setError(err.message);
@@ -40,10 +40,9 @@ export default function Game() {
   };
 
   const newGame = () => {
-    // setConfig(BOARD_TEST);
     setConfig(BOARD_NEW_GAME);
     setTurn(PLAYER_1);
-    setPlayer(PLAYER_1); // temp
+    setPlayer(PLAYER_1); // temporary
   };
 
   const endGame = () => {
@@ -57,10 +56,6 @@ export default function Game() {
     moveStart,
     moveEnd,
   };
-
-  // useEffect(() => {
-  //   newGame();
-  // }, []);
 
   return (
     <GameContext.Provider value={context}>
