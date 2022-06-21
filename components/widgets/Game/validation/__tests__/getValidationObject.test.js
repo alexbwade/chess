@@ -54,11 +54,7 @@ describe("getValidationObject", () => {
     });
   });
 
-  // describe("status", () => {
-  // wereChecked,
-  // areChecked,
-  // stillChecked,
-  // });
+  // status
 
   describe("movement", () => {
     describe("isSameSpace", () => {
