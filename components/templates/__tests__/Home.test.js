@@ -11,11 +11,11 @@ describe("<Home />", () => {
     render(<Home />);
   });
 
-  it(`renders heading`, () => {
+  it("renders heading", () => {
     expect(screen.getByRole("heading")).toHaveTextContent("Chess");
   });
 
-  it(`renders a chess game`, () => {
+  it("renders a chess game", () => {
     expect(screen.getByTestId("ChessGame")).toBeInTheDocument();
   });
 });

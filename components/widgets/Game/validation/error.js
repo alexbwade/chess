@@ -4,6 +4,10 @@ export const ERROR_OCCUPIED = "This space is already occupied by a friendly piec
 
 export const ERROR_BLOCKED = "There is another piece in the way.";
 
+export const ERROR_NOT_YOUR_PIECE = "That is not your piece.";
+
+export const ERROR_NOT_YOUR_TURN = "It's not your turn.";
+
 export const ERROR_BISHOP = "This piece must move diagonally.";
 
 export const ERROR_KING = "This piece can only move one space (in any direction) at a time - unless castling.";

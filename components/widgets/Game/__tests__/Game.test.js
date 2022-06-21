@@ -61,9 +61,9 @@ describe("<Game />", () => {
 
     await startGame();
 
-    drag("7b", "6b"); // move black pawn forward
+    drag("2b", "3b"); // move white pawn forward
 
-    expect(getSquare("6b").querySelector("img")).toBeInTheDocument();
+    expect(getSquare("3b").querySelector("img")).toBeInTheDocument();
   });
 
   it("does not allow invalid moves", async () => {
@@ -71,7 +71,7 @@ describe("<Game />", () => {
 
     await startGame();
 
-    drag("7b", "5b"); // attempt move black pawn forward two spaces
+    drag("2b", "5b"); // attempt move white pawn forward three spaces
 
     expect(getSquare("5b").querySelector("img")).not.toBeInTheDocument();
   });

@@ -44,6 +44,7 @@ export const DIRECTIONS = {
   HORIZONTAL: "horizontal",
   VERTICAL: "vertical",
   L_SHAPE: "l_shape",
+  NONE: "none",
   OTHER: "other",
 };
 
@@ -82,3 +83,54 @@ export const BOARD_NEW_GAME = (function () {
 
   return board;
 })();
+
+export const BOARD_TEST = (function () {
+  const board = { ...BOARD_EMPTY };
+
+  const MAJOR_ROW = [ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK];
+
+  const createPieces = (pieceTypes, color) => pieceTypes.map((type) => ({ color, type }));
+
+  const occupiedRows = {
+    8: createPieces(MAJOR_ROW, BLACK),
+    // 7: createPieces(MINOR_ROW, BLACK),
+    // 2: createPieces(MINOR_ROW, WHITE),
+    1: createPieces(MAJOR_ROW, WHITE),
+  };
+
+  const setRow = (row, pieces) => {
+    for (const col of COLUMNS) {
+      const squareId = `${row}${col}`;
+      board[squareId] = pieces.shift();
+    }
+  };
+
+  Object.entries(occupiedRows).forEach(([row, set]) => {
+    setRow(row, set);
+  });
+
+  // to simulate queen becoming new piece
+  board["7f"] = { type: PAWN, color: WHITE, moved: true }; // remove black bishop
+  board["8f"] = null; // add white pawn at penultimate square from end of board
+  board["8e"] = null; // move black king to avoid him being checked
+  board["7e"] = { type: KING, color: BLACK, moved: true };
+
+  // this pawn is used a lot in tests, and it doesn't block any pieces
+  board["2c"] = { type: PAWN, color: WHITE };
+
+  // for testing blocked paths
+  board["4d"] = { type: PAWN, color: BLACK };
+
+  return board;
+})();
+
+export const PLAYERS = {
+  PLAYER_1: COLORS.WHITE,
+  PLAYER_2: COLORS.BLACK,
+};
+
+export const STATUSES = {
+  CLEAR: "clear",
+  CHECK: "check",
+  CHECKMATE: "checkmate",
+};
