@@ -1,8 +1,8 @@
 import getDeltas from "../getDeltas";
 
 describe("getDeltas", () => {
-  it("should calculate expected properties for move: 1a -> 1b", () => {
-    expect(getDeltas({ start: "1a", end: "1b" })).toEqual(
+  it("should calculate expected properties for move: a1 -> b1", () => {
+    expect(getDeltas({ start: "a1", end: "b1" })).toEqual(
       expect.objectContaining({
         colDelta: 1,
         rowDelta: 0,
@@ -14,8 +14,8 @@ describe("getDeltas", () => {
     );
   });
 
-  it("should calculate expected properties for move: 7a -> 4c", () => {
-    expect(getDeltas({ start: "7a", end: "4c" })).toEqual(
+  it("should calculate expected properties for move: a7 -> c4", () => {
+    expect(getDeltas({ start: "a7", end: "c4" })).toEqual(
       expect.objectContaining({
         colDelta: 2,
         rowDelta: 3,
@@ -27,8 +27,8 @@ describe("getDeltas", () => {
     );
   });
 
-  it("should calculate expected properties for move: 6h -> 2a", () => {
-    expect(getDeltas({ start: "6h", end: "2a" })).toEqual(
+  it("should calculate expected properties for move: h6 -> a2", () => {
+    expect(getDeltas({ start: "h6", end: "a2" })).toEqual(
       expect.objectContaining({
         colDelta: -7,
         colChange: 7,
@@ -42,8 +42,8 @@ describe("getDeltas", () => {
     );
   });
 
-  it("should calculate expected properties for move: 1h -> 8a", () => {
-    expect(getDeltas({ start: "1h", end: "8a" })).toEqual(
+  it("should calculate expected properties for move: h1 -> a8", () => {
+    expect(getDeltas({ start: "h1", end: "a8" })).toEqual(
       expect.objectContaining({
         colDelta: -7,
         colChange: 7,

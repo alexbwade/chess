@@ -12,6 +12,8 @@ export const COLORS = {
   BLACK: "black",
 };
 
+export const getSquareId = ({ rowId, colId }) => `${colId}${rowId}`;
+
 const { WHITE, BLACK } = COLORS;
 
 export const COLUMNS = ["a", "b", "c", "d", "e", "f", "g", "h"];
@@ -25,7 +27,7 @@ export const SQUARES = (function () {
   for (const row of ROWS) {
     for (const col of COLUMNS) {
       squares.push({
-        id: `${row}${col}`,
+        id: `${col}${row}`,
         color: isWhite ? WHITE : BLACK,
       });
 
@@ -72,7 +74,7 @@ export const BOARD_NEW_GAME = (function () {
 
   const setRow = (row, pieces) => {
     for (const col of COLUMNS) {
-      const squareId = `${row}${col}`;
+      const squareId = getSquareId({ rowId: row, colId: col });
       board[squareId] = pieces.shift();
     }
   };
@@ -100,7 +102,7 @@ export const BOARD_TEST = (function () {
 
   const setRow = (row, pieces) => {
     for (const col of COLUMNS) {
-      const squareId = `${row}${col}`;
+      const squareId = getSquareId({ rowId: row, colId: col });
       board[squareId] = pieces.shift();
     }
   };
@@ -110,16 +112,16 @@ export const BOARD_TEST = (function () {
   });
 
   // to simulate queen becoming new piece
-  board["7f"] = { type: PAWN, color: WHITE, moved: true }; // remove black bishop
-  board["8f"] = null; // add white pawn at penultimate square from end of board
-  board["8e"] = null; // move black king to avoid him being checked
-  board["7e"] = { type: KING, color: BLACK, moved: true };
+  board["f7"] = { type: PAWN, color: WHITE, moved: true }; // remove black bishop
+  board["f8"] = null; // add white pawn at penultimate square from end of board
+  board["e8"] = null; // move black king to avoid him being checked
+  board["e7"] = { type: KING, color: BLACK, moved: true };
 
   // this pawn is used a lot in tests, and it doesn't block any pieces
-  board["2c"] = { type: PAWN, color: WHITE };
+  board["c2"] = { type: PAWN, color: WHITE };
 
   // for testing blocked paths
-  board["4d"] = { type: PAWN, color: BLACK };
+  board["d4"] = { type: PAWN, color: BLACK };
 
   return board;
 })();

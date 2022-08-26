@@ -1,4 +1,4 @@
-import { COLUMNS, ROWS, DIRECTIONS, NUM_SQUARES } from "~constants";
+import { COLUMNS, ROWS, DIRECTIONS, NUM_SQUARES, getSquareId } from "~constants";
 
 const { L_SHAPE, OTHER } = DIRECTIONS;
 
@@ -28,7 +28,7 @@ export default function getPath(deltas, direction) {
   while (!(thisRowIndex === nextRowIndex && thisColIndex === nextColIndex)) {
     const rowId = ROWS[thisRowIndex];
     const colId = COLUMNS[thisColIndex];
-    const squareId = `${rowId}${colId}`;
+    const squareId = getSquareId({ rowId, colId });
 
     results.push(squareId);
 

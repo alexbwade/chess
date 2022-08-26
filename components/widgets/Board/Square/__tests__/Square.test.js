@@ -17,7 +17,7 @@ describe("<Square />", () => {
   let props;
 
   beforeEach(() => {
-    props = getSquareProps("4a");
+    props = getSquareProps("a4");
   });
 
   it("renders a square with no piece", () => {
@@ -29,7 +29,7 @@ describe("<Square />", () => {
   });
 
   it("renders a square with a piece", () => {
-    props = getSquareProps("2a");
+    props = getSquareProps("a2");
 
     render(<Square {...props} />);
 

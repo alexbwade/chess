@@ -9,7 +9,7 @@ const { CLEAR } = STATUSES;
 
 describe("updateBoard", () => {
   it("should return the new board state after a valid move", () => {
-    const move = { start: "2a", end: "3a", player: PLAYER_1 };
+    const move = { start: "a2", end: "a3", player: PLAYER_1 };
     const board = {
       config: BOARD_NEW_GAME,
       turn: PLAYER_1,
@@ -17,7 +17,7 @@ describe("updateBoard", () => {
 
     expect(updateBoard(board, move)).toEqual({
       config: expect.objectContaining({
-        "3a": { color: WHITE, type: PAWN, moved: true },
+        a3: { color: WHITE, type: PAWN, moved: true },
       }),
       status: CLEAR,
       turn: PLAYER_2,
@@ -25,7 +25,7 @@ describe("updateBoard", () => {
   });
 
   it("should update player turn", () => {
-    const move = { start: "7a", end: "6a", player: PLAYER_2 };
+    const move = { start: "a7", end: "a6", player: PLAYER_2 };
     const board = {
       config: BOARD_NEW_GAME,
       turn: PLAYER_2,
@@ -33,7 +33,7 @@ describe("updateBoard", () => {
 
     expect(updateBoard(board, move)).toEqual({
       config: expect.objectContaining({
-        "6a": { color: BLACK, type: PAWN, moved: true },
+        a6: { color: BLACK, type: PAWN, moved: true },
       }),
       status: CLEAR,
       turn: PLAYER_1,

@@ -17,31 +17,31 @@ describe("getNextConfig", () => {
     };
   });
 
-  it("should calculate correct board config for moving left white knight from 1b -> 3c", () => {
-    const move = { start: "1b", end: "3c" };
+  it("should calculate correct board config for moving left white knight from b1 -> c3", () => {
+    const move = { start: "b1", end: "c3" };
     const deltas = getDeltas(move);
 
     const nextConfig = getNextConfig({ board, move, deltas });
 
     expect(nextConfig).toEqual({
       ...BOARD_NEW_GAME,
-      "1b": null,
-      "3c": { color: WHITE, type: KNIGHT, moved: true },
+      b1: null,
+      c3: { color: WHITE, type: KNIGHT, moved: true },
     });
   });
 
   it("should calculate correct board config for moving white queen to end of board", () => {
     board = { config: BOARD_TEST };
 
-    const move = { start: "7f", end: "8f" };
+    const move = { start: "f7", end: "f8" };
     const deltas = getDeltas(move);
 
     const nextConfig = getNextConfig({ board, move, deltas });
 
     expect(nextConfig).toEqual({
       ...BOARD_TEST,
-      "7f": null,
-      "8f": { color: WHITE, type: QUEEN, moved: true },
+      f7: null,
+      f8: { color: WHITE, type: QUEEN, moved: true },
     });
   });
 });
