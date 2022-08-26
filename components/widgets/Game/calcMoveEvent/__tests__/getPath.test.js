@@ -11,50 +11,50 @@ const getArgs = ({ start, end }) => {
 };
 
 describe("getPath", () => {
-  it("should calculate spaces properly for: 1a -> 3c", () => {
-    const args = getArgs({ start: "1a", end: "3c" });
+  it("should calculate spaces properly for: a1 -> c3", () => {
+    const args = getArgs({ start: "a1", end: "c3" });
     const result = getPath(...args);
 
-    expect(result).toEqual(["2b"]);
+    expect(result).toEqual(["b2"]);
   });
 
-  it("should calculate spaces properly for: 2d -> 6d", () => {
-    const args = getArgs({ start: "2d", end: "6d" });
+  it("should calculate spaces properly for: d2 -> d6", () => {
+    const args = getArgs({ start: "d2", end: "d6" });
     const result = getPath(...args);
 
-    expect(result).toEqual(["3d", "4d", "5d"]);
+    expect(result).toEqual(["d3", "d4", "d5"]);
   });
 
-  it("should calculate spaces properly for: 4a -> 4f", () => {
-    const args = getArgs({ start: "4a", end: "4f" });
+  it("should calculate spaces properly for: a4 -> f4", () => {
+    const args = getArgs({ start: "a4", end: "f4" });
     const result = getPath(...args);
 
-    expect(result).toEqual(["4b", "4c", "4d", "4e"]);
+    expect(result).toEqual(["b4", "c4", "d4", "e4"]);
   });
 
   it("should return empty array if it is an l-shaped path", () => {
-    const args = getArgs({ start: "1a", end: "3b" });
+    const args = getArgs({ start: "a1", end: "b3" });
     const result = getPath(...args);
 
     expect(result).toEqual([]);
   });
 
   it("should return empty array if it is non-standard path", () => {
-    const args = getArgs({ start: "8a", end: "2c" });
+    const args = getArgs({ start: "a8", end: "c2" });
     const result = getPath(...args);
 
     expect(result).toEqual([]);
   });
 
   it("should return empty array if there are no spaces between (moving 1 space)", () => {
-    const args = getArgs({ start: "1a", end: "2b" });
+    const args = getArgs({ start: "a1", end: "b2" });
     const result = getPath(...args);
 
     expect(result).toEqual([]);
   });
 
   it("should catch infinite loops", () => {
-    const args = getArgs({ start: "1a", end: "7c" });
+    const args = getArgs({ start: "a1", end: "c7" });
     args.direction = "invalid";
 
     expect(() => {
